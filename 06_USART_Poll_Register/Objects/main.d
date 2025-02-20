@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .\objects\main.o: User\main.c
 .\objects\main.o: .\Driver\usart\Driver_USART.h
 .\objects\main.o: .\Start\stm32f10x.h
@@ -6,3 +7,13 @@
 .\objects\main.o: .\Start\system_stm32f10x.h
 .\objects\main.o: User\Delay.h
 .\objects\main.o: C:\Keil_v5\ARM\arm5_compiler\Bin\..\include\string.h
+=======
+.\objects\main.o: User\main.c
+.\objects\main.o: .\Driver\usart\Driver_USART.h
+.\objects\main.o: .\Start\stm32f10x.h
+.\objects\main.o: .\Start\core_cm3.h
+.\objects\main.o: C:\Keil_v5\ARM\arm5_compiler\Bin\..\include\stdint.h
+.\objects\main.o: .\Start\system_stm32f10x.h
+.\objects\main.o: User\Delay.h
+.\objects\main.o: C:\Keil_v5\ARM\arm5_compiler\Bin\..\include\string.h
+>>>>>>> 76c4cee50f178cd49ce3be2deb15d82d9ae03244

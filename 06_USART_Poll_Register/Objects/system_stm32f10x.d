@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 .\objects\system_stm32f10x.o: Start\system_stm32f10x.c
 .\objects\system_stm32f10x.o: Start\stm32f10x.h
 .\objects\system_stm32f10x.o: Start\core_cm3.h
 .\objects\system_stm32f10x.o: C:\Keil_v5\ARM\arm5_compiler\Bin\..\include\stdint.h
 .\objects\system_stm32f10x.o: Start\system_stm32f10x.h
+=======
+.\objects\system_stm32f10x.o: Start\system_stm32f10x.c
+.\objects\system_stm32f10x.o: Start\stm32f10x.h
+.\objects\system_stm32f10x.o: Start\core_cm3.h
+.\objects\system_stm32f10x.o: C:\Keil_v5\ARM\arm5_compiler\Bin\..\include\stdint.h
+.\objects\system_stm32f10x.o: Start\system_stm32f10x.h
+>>>>>>> 76c4cee50f178cd49ce3be2deb15d82d9ae03244

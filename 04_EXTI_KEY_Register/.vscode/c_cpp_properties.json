@@ -3,11 +3,12 @@
         {
             "name": "Target 1",
             "includePath": [
-                "c:\\Users\\lzc\\Desktop\\class_code\\04_EXTI_KEY_Register\\Start",
-                "c:\\Users\\lzc\\Desktop\\class_code\\04_EXTI_KEY_Register\\User",
-                "c:\\Users\\lzc\\Desktop\\class_code\\04_EXTI_KEY_Register\\Driver\\Led",
-                "c:\\Users\\lzc\\Desktop\\class_code\\04_EXTI_KEY_Register\\Driver\\Key",
-                "C:\\Keil_v5\\ARM\\ARMCC\\include"
+                "f:\\32keil_chenxundaimakaifa\\04_EXTI_KEY_Register\\Start",
+                "f:\\32keil_chenxundaimakaifa\\04_EXTI_KEY_Register\\User",
+                "f:\\32keil_chenxundaimakaifa\\04_EXTI_KEY_Register\\Driver\\Led",
+                "f:\\32keil_chenxundaimakaifa\\04_EXTI_KEY_Register\\Driver\\Key",
+                "D:\\32keil\\32keil\\ARM\\ARMCC\\include",
+                "D:\\32keil\\32keil\\ARM\\ARMCC\\include\\rw"
             ],
             "defines": [
                 "__CC_ARM",

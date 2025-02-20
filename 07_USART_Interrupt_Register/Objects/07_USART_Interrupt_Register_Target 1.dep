@@ -1,0 +1,34 @@
+Dependencies for Project '07_USART_Interrupt_Register', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\arm5_compiler
+F (.\Start\core_cm3.c)(0x61605444)(--c99 --gnu -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\core_cm3.o --omf_browse .\objects\core_cm3.crf --depend .\objects\core_cm3.d)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+F (.\Start\system_stm32f10x.c)(0x61605444)(--c99 --gnu -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\system_stm32f10x.o --omf_browse .\objects\system_stm32f10x.crf --depend .\objects\system_stm32f10x.d)
+I (Start\stm32f10x.h)(0x65A0F8AC)
+I (Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (Start\system_stm32f10x.h)(0x61605444)
+F (.\Start\startup_stm32f10x_hd.s)(0x61605445)(--cpu Cortex-M3 -g --apcs=interwork -IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include--pd "__UVISION_VERSION SETA 538" --pd "STM32F10X_HD SETA 1"--list .\listings\startup_stm32f10x_hd.lst --xref -o .\objects\startup_stm32f10x_hd.o --depend .\objects\startup_stm32f10x_hd.d)
+F (.\User\main.c)(0x65A1EED7)(--c99 --gnu -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (.\Driver\usart\Driver_USART.h)(0x65A0F0AD)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\User\Delay.c)(0x659CB93E)(--c99 --gnu -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
+I (User\Delay.h)(0x659CB920)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\Driver\Led\Driver_LED.c)(0x659CC258)(--c99 --gnu -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_led.o --omf_browse .\objects\driver_led.crf --depend .\objects\driver_led.d)
+I (Driver\Led\Driver_LED.h)(0x659CC241)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\Driver\usart\Driver_USART.c)(0x65A1EECA)(--c99 --gnu -c --cpu Cortex-M3 -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_usart.o --omf_browse .\objects\driver_usart.crf --depend .\objects\driver_usart.d)
+I (Driver\usart\Driver_USART.h)(0x65A0F0AD)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)

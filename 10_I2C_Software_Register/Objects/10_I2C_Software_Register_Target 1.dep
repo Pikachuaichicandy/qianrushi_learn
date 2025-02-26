@@ -1,0 +1,60 @@
+Dependencies for Project '10_I2C_Software_Register', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\arm5_compiler
+F (.\Start\core_cm3.c)(0x61605444)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\core_cm3.o --omf_browse .\objects\core_cm3.crf --depend .\objects\core_cm3.d)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+F (.\Start\system_stm32f10x.c)(0x61605444)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\system_stm32f10x.o --omf_browse .\objects\system_stm32f10x.crf --depend .\objects\system_stm32f10x.d)
+I (Start\stm32f10x.h)(0x65A0F8AC)
+I (Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (Start\system_stm32f10x.h)(0x61605444)
+F (.\Start\startup_stm32f10x_hd.s)(0x61605445)(--cpu Cortex-M3 -g --apcs=interwork --pd "__MICROLIB SETA 1"-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include--pd "__UVISION_VERSION SETA 538" --pd "STM32F10X_HD SETA 1"--list .\listings\startup_stm32f10x_hd.lst --xref -o .\objects\startup_stm32f10x_hd.o --depend .\objects\startup_stm32f10x_hd.d)
+F (.\User\main.c)(0x65A5F964)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (.\Driver\usart\Driver_USART.h)(0x65A2269A)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+I (.\Inf\w24c02\Inf_W24C02.h)(0x65A49855)
+I (.\Driver\i2c\Driver_I2C2.h)(0x65A2511A)
+I (.\User\Delay.h)(0x659CB920)
+I (C:\Keil_v5\ARM\arm5_compiler\include\string.h)(0x6025237E)
+F (.\User\Delay.c)(0x659CB93E)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
+I (User\Delay.h)(0x659CB920)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\Driver\Led\Driver_LED.c)(0x659CC258)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_led.o --omf_browse .\objects\driver_led.crf --depend .\objects\driver_led.d)
+I (Driver\Led\Driver_LED.h)(0x659CC241)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\Driver\usart\Driver_USART.c)(0x65A22730)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_usart.o --omf_browse .\objects\driver_usart.crf --depend .\objects\driver_usart.d)
+I (Driver\usart\Driver_USART.h)(0x65A2269A)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+F (.\Driver\i2c\Driver_I2C2.c)(0x65A25117)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_i2c2.o --omf_browse .\objects\driver_i2c2.crf --depend .\objects\driver_i2c2.d)
+I (Driver\i2c\Driver_I2C2.h)(0x65A2511A)
+I (.\User\Delay.h)(0x659CB920)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (.\Driver\usart\Driver_USART.h)(0x65A2269A)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+F (.\Inf\w24c02\Inf_W24C02.c)(0x65A4E58C)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\i2c -I .\Inf\w24c02-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\inf_w24c02.o --omf_browse .\objects\inf_w24c02.crf --depend .\objects\inf_w24c02.d)
+I (Inf\w24c02\Inf_W24C02.h)(0x65A49855)
+I (.\Driver\i2c\Driver_I2C2.h)(0x65A2511A)
+I (.\User\Delay.h)(0x659CB920)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (.\Driver\usart\Driver_USART.h)(0x65A2269A)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+I (C:\Keil_v5\ARM\arm5_compiler\include\string.h)(0x6025237E)

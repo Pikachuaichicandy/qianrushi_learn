@@ -1,0 +1,79 @@
+Dependencies for Project '21_General_TImer_LCD_BG_Register', Target 'Target 1': (DO NOT MODIFY !)
+CompilerVersion: 5060960::V5.06 update 7 (build 960)::.\arm5_compiler
+F (.\Start\core_cm3.c)(0x61605444)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\core_cm3.o --omf_browse .\objects\core_cm3.crf --depend .\objects\core_cm3.d)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+F (.\Start\system_stm32f10x.c)(0x65A88FC5)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\system_stm32f10x.o --omf_browse .\objects\system_stm32f10x.crf --depend .\objects\system_stm32f10x.d)
+I (Start\stm32f10x.h)(0x65A0F8AC)
+I (Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (Start\system_stm32f10x.h)(0x61605444)
+F (.\Start\startup_stm32f10x_hd.s)(0x61605445)(--cpu Cortex-M3 -g --apcs=interwork --pd "__MICROLIB SETA 1"-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include--pd "__UVISION_VERSION SETA 538" --pd "STM32F10X_HD SETA 1"--list .\listings\startup_stm32f10x_hd.lst --xref -o .\objects\startup_stm32f10x_hd.o --depend .\objects\startup_stm32f10x_hd.d)
+F (.\User\main.c)(0x65AA7523)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+I (.\Driver\usart\Driver_USART.h)(0x65A2269A)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+I (User\Delay.h)(0x659CB920)
+I (.\Driver\systick\Driver_SysTick.h)(0x65A72BB2)
+I (.\Driver\Led\Driver_LED.h)(0x659CC241)
+I (.\Driver\key\Driver_Key.h)(0x65AA56A0)
+I (.\Driver\timer\Driver_TIM3.h)(0x65AA5855)
+F (.\User\Delay.c)(0x65AA53AD)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\delay.o --omf_browse .\objects\delay.crf --depend .\objects\delay.d)
+I (User\Delay.h)(0x659CB920)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\Driver\Led\Driver_LED.c)(0x65A72BE1)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_led.o --omf_browse .\objects\driver_led.crf --depend .\objects\driver_led.d)
+I (Driver\Led\Driver_LED.h)(0x659CC241)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\Driver\usart\Driver_USART.c)(0x65A22730)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_usart.o --omf_browse .\objects\driver_usart.crf --depend .\objects\driver_usart.d)
+I (Driver\usart\Driver_USART.h)(0x65A2269A)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+F (.\Driver\systick\Driver_SysTick.c)(0x65A73CA3)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_systick.o --omf_browse .\objects\driver_systick.crf --depend .\objects\driver_systick.d)
+I (Driver\systick\Driver_SysTick.h)(0x65A72BB2)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (.\Driver\Led\Driver_LED.h)(0x659CC241)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+F (.\Driver\timer\Driver_TIM6.c)(0x65A8A286)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_tim6.o --omf_browse .\objects\driver_tim6.crf --depend .\objects\driver_tim6.d)
+I (Driver\timer\Driver_TIM6.h)(0x65A784AD)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (.\Driver\Led\Driver_LED.h)(0x659CC241)
+I (.\Driver\usart\Driver_USART.h)(0x65A2269A)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdio.h)(0x60252374)
+I (.\User\Delay.h)(0x659CB920)
+F (.\Driver\timer\Driver_TIM5.c)(0x65A9F3F5)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_tim5.o --omf_browse .\objects\driver_tim5.crf --depend .\objects\driver_tim5.d)
+I (Driver\timer\Driver_TIM5.h)(0x65A9F1FC)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+F (.\Driver\key\Driver_Key.c)(0x65AA6437)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_key.o --omf_browse .\objects\driver_key.crf --depend .\objects\driver_key.d)
+I (Driver\key\Driver_Key.h)(0x65AA56A0)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)
+I (.\Driver\Led\Driver_LED.h)(0x659CC241)
+I (.\User\Delay.h)(0x659CB920)
+F (.\Driver\timer\Driver_TIM3.c)(0x65AA5E15)(--c99 --gnu -c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork --split_sections -I .\Start -I .\User -I .\Driver\Led -I .\Driver\usart -I .\Driver\systick -I .\Driver\timer -I .\Driver\key-IC:\Users\lzc\AppData\Local\Arm\Packs\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="538" -DSTM32F10X_HD-o .\objects\driver_tim3.o --omf_browse .\objects\driver_tim3.crf --depend .\objects\driver_tim3.d)
+I (Driver\timer\Driver_TIM3.h)(0x65AA5855)
+I (.\Start\stm32f10x.h)(0x65A0F8AC)
+I (.\Start\core_cm3.h)(0x61605444)
+I (C:\Keil_v5\ARM\arm5_compiler\include\stdint.h)(0x6025237E)
+I (.\Start\system_stm32f10x.h)(0x61605444)

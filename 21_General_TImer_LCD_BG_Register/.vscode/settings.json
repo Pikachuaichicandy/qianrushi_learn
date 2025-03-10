@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "driver_led.h": "c",
+        "driver_usart.h": "c",
+        "driver_systick.h": "c",
+        "driver_tim6.h": "c",
+        "driver_tim5.h": "c",
+        "stm32f10x.h": "c"
+    }
+}

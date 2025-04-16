@@ -1,0 +1,2 @@
+source E:/esp32s3/Boot_Key/build/gdbinit/symbols
+source E:/esp32s3/Boot_Key/build/gdbinit/connect

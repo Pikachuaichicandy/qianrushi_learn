@@ -11,8 +11,6 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QLabel>
-#include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -20,28 +18,12 @@ QT_BEGIN_NAMESPACE
 class Ui_Widget
 {
 public:
-    QLabel *label_2;
-    QWidget *widget;
-    QLabel *label;
-    QPushButton *btn;
 
     void setupUi(QWidget *Widget)
     {
         if (Widget->objectName().isEmpty())
             Widget->setObjectName(QString::fromUtf8("Widget"));
         Widget->resize(800, 600);
-        label_2 = new QLabel(Widget);
-        label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(140, 270, 72, 15));
-        widget = new QWidget(Widget);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(370, 160, 120, 80));
-        label = new QLabel(widget);
-        label->setObjectName(QString::fromUtf8("label"));
-        label->setGeometry(QRect(10, 30, 72, 15));
-        btn = new QPushButton(Widget);
-        btn->setObjectName(QString::fromUtf8("btn"));
-        btn->setGeometry(QRect(170, 330, 93, 28));
 
         retranslateUi(Widget);
 
@@ -51,9 +33,6 @@ public:
     void retranslateUi(QWidget *Widget)
     {
         Widget->setWindowTitle(QCoreApplication::translate("Widget", "Widget", nullptr));
-        label_2->setText(QCoreApplication::translate("Widget", "TextLabel", nullptr));
-        label->setText(QCoreApplication::translate("Widget", "TextLabel", nullptr));
-        btn->setText(QCoreApplication::translate("Widget", "PushButton", nullptr));
     } // retranslateUi
 
 };

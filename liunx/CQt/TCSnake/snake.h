@@ -25,7 +25,7 @@ public:
 
     void addBody(moveDir dir); //跟据方向调整添加的尾部
 
-    QVector<SnakeBody> m_snake; //蛇的全部
+    QVector<snakeBody> m_snake; //蛇的全部
 
 signals:
 

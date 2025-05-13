@@ -1,7 +1,7 @@
 #ifndef STRUCT_H
 #define STRUCT_H
 
-#include "QPixmap"
+#include <QPixmap>
 
 enum moveDir{
     //移动方向
@@ -31,7 +31,7 @@ struct Block
         x=y=-1;
         pix=QPixmap();
     }
-    Block(int a, int b, QPixmap):x(a),y(b){} //方便创建实物的时候使用
+    Block(int a, int b):x(a),y(b){} //方便创建实物的时候使用
     Block(int a, int b,QPixmap p)
     {
         x=a;y=b;pix=p;
@@ -51,7 +51,7 @@ struct Food : Block
 {
     foodType type;
     Food():Block(){} //获得初始化
-    Food(int a,intb,QPixmap p,foodType t):Block(a,b,p),type(t){}
+    Food(int a,int b,QPixmap p,foodType t):Block(a,b,p),type(t){}
     Food(int a,int b):Block(a,b){}
 };
 

@@ -2,6 +2,7 @@
 #define MAINSCENE_H
 
 #include"snake.h"
+#include <QWidget>
 #include <QTimer>
 #include <QKeyEvent>
 #include <QRandomGenerator>
@@ -16,10 +17,10 @@ public:
 public slots:
     void start();
     void pause();
-    void gameOver();
+    void gameover();
 
 protected:
-    void QPaintEvent(QPaintEvent *event);
+    void PaintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
 signals:
@@ -32,10 +33,10 @@ private:
 
     void painBorder(QPainter* painter);   //画背景边框
     void paintSnakeBody(QPainter* painter);  //画蛇
-    void paintFood(QPaint* painter); //画食物
+    void paintFood(QPainter* painter); //画食物
     void paintGameInit(QPainter* painter);
     void PainterGameOver(QPainter* painter);
-    void PaintCenterText(QPainter* painter);
+    void PaintCenterText(QPainter* painter,QString& str);
 
     void timerMove();
 
@@ -43,6 +44,9 @@ private:
     Snake m_snake;
     gameStatus m_status;
     Food totalFood[totalNum];  //毒药，苹果，香蕉
+    moveDir m_dir;
+    int m_score;
+    int lastTime,currTime;
     QPixmap head[4];
 
 };

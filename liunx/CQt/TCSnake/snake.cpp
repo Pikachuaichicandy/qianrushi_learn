@@ -25,7 +25,7 @@ int Snake::isEatFood(Food &food)
             return 10;
         case foodType::banana:
             return 20;
-        case foodType::banana:
+        case foodType::drug:
             return -30;
 
         }
@@ -36,7 +36,7 @@ int Snake::isEatFood(Food &food)
 
 bool Snake::isCrossBorder()
 {
-    if(m_snake[0].x<0||m_snake[0].x>=B_W_Count||m_snake[0].y<0||m_snake>=B_H_Count)
+    if(m_snake[0].x< 0 || m_snake[0].x >=B_W_Count || m_snake[0].y < 0 || m_snake[0].y>=B_H_Count)
     {
         return true;
     }
@@ -51,6 +51,7 @@ bool Snake::isCrossSelf()
         if(x==m_snake[i].x&&y==m_snake[i].y)
             return true;
     }
+    return false;
 }
 
 
@@ -98,9 +99,8 @@ void Snake::addBody(moveDir dir)
         x = m_snake.last().x-1,y=m_snake.last().y+1;
         break;
 
-    default:
-        break;
     }
+    m_snake.push_back({x,y,body});
 }
 
 

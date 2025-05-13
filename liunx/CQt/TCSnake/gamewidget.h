@@ -16,7 +16,7 @@ public:
     GameWidget(QWidget *parent = nullptr);
     ~GameWidget();
 
-    void updateLcdNum();
+    void updateLcdNum(int num);
 
 
 private:

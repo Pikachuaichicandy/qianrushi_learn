@@ -7,9 +7,10 @@
 #include <QKeyEvent>
 #include <QRandomGenerator>
 #include <QMutex>
-
+# pragma execution_character_set("utf-8")
 class MainScene : public QWidget
 {
+      Q_OBJECT  //
 public:
     explicit MainScene(QWidget *parent = nullptr);
 
@@ -20,7 +21,7 @@ public slots:
     void gameover();
 
 protected:
-    void PaintEvent(QPaintEvent *event);
+    void paintEvent(QPaintEvent *event);
     void keyPressEvent(QKeyEvent *event);
 
 signals:
@@ -35,8 +36,8 @@ private:
     void paintSnakeBody(QPainter* painter);  //画蛇
     void paintFood(QPainter* painter); //画食物
     void paintGameInit(QPainter* painter);
-    void PainterGameOver(QPainter* painter);
-    void PaintCenterText(QPainter* painter,QString& str);
+    void painterGameOver(QPainter* painter);
+    void paintCenterText(QPainter* painter,QString& str);
 
     void timerMove();
 

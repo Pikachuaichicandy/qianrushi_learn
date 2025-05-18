@@ -3,7 +3,7 @@
 
 #include <QWidget>
 #include"mainscene.h"
-
+# pragma execution_character_set("utf-8")
 QT_BEGIN_NAMESPACE
 namespace Ui { class GameWidget; }
 QT_END_NAMESPACE

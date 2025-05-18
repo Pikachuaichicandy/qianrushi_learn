@@ -11,6 +11,11 @@
 
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
+#include <QtWidgets/QLCDNumber>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QListView>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -18,12 +23,53 @@ QT_BEGIN_NAMESPACE
 class Ui_GameWidget
 {
 public:
+    QLabel *label;
+    QWidget *widget;
+    QVBoxLayout *verticalLayout;
+    QLCDNumber *lcdNumber;
+    QPushButton *start;
+    QPushButton *pause;
+    QPushButton *over;
+    QListView *listView;
 
     void setupUi(QWidget *GameWidget)
     {
         if (GameWidget->objectName().isEmpty())
             GameWidget->setObjectName(QString::fromUtf8("GameWidget"));
         GameWidget->resize(800, 600);
+        label = new QLabel(GameWidget);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(530, 30, 72, 15));
+        widget = new QWidget(GameWidget);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(520, 50, 274, 341));
+        verticalLayout = new QVBoxLayout(widget);
+        verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
+        lcdNumber = new QLCDNumber(widget);
+        lcdNumber->setObjectName(QString::fromUtf8("lcdNumber"));
+
+        verticalLayout->addWidget(lcdNumber);
+
+        start = new QPushButton(widget);
+        start->setObjectName(QString::fromUtf8("start"));
+
+        verticalLayout->addWidget(start);
+
+        pause = new QPushButton(widget);
+        pause->setObjectName(QString::fromUtf8("pause"));
+
+        verticalLayout->addWidget(pause);
+
+        over = new QPushButton(widget);
+        over->setObjectName(QString::fromUtf8("over"));
+
+        verticalLayout->addWidget(over);
+
+        listView = new QListView(widget);
+        listView->setObjectName(QString::fromUtf8("listView"));
+
+        verticalLayout->addWidget(listView);
+
 
         retranslateUi(GameWidget);
 
@@ -33,6 +79,10 @@ public:
     void retranslateUi(QWidget *GameWidget)
     {
         GameWidget->setWindowTitle(QCoreApplication::translate("GameWidget", "GameWidget", nullptr));
+        label->setText(QCoreApplication::translate("GameWidget", "\345\275\223\345\211\215\345\210\206\346\225\260\357\274\232", nullptr));
+        start->setText(QCoreApplication::translate("GameWidget", "\345\274\200\345\247\213", nullptr));
+        pause->setText(QCoreApplication::translate("GameWidget", "\346\232\202\345\201\234/\345\274\200\345\247\213", nullptr));
+        over->setText(QCoreApplication::translate("GameWidget", "\347\273\223\346\235\237", nullptr));
     } // retranslateUi
 
 };

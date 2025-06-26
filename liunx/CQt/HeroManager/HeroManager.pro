@@ -17,18 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    dlg_addhero.cpp \
     main.cpp \
     heromanagerwidget.cpp \
     page_login.cpp \
     sqlite.cpp
 
 HEADERS += \
+    dlg_addhero.h \
     heromanagerwidget.h \
     page_login.h \
     sqlite.h \
     struct.h
 
 FORMS += \
+    dlg_addhero.ui \
     heromanagerwidget.ui \
     page_login.ui
 

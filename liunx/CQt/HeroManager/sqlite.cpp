@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QCoreApplication>
 
+sqlite *sqlite::ptrsqlite = nullptr;  // 在源文件中定义静态成员变量
+
 sqlite::sqlite(QObject *parent) : QObject(parent)
 {
 //    if (QSqlDatabase::drivers().isEmpty())
@@ -99,10 +101,11 @@ void sqlite::init()
 
     // 获取当前路径
 #if 0
-    auto str = QCoreApplication::applicationDirPath()+"data.db";
+    auto str = QCoreApplication::applicationDirPath()+"/data.db";
     qDebug() << str;  // 正确输出 QString 类型
 #endif
-    m_db.setDatabaseName("F:/32keil_chenxundaimakaifa/liunx/CQt/HeroManager/data.db");
+    QString str = "F:/32keil_chenxundaimakaifa/liunx/CQt/HeroManager/data.db";
+    m_db.setDatabaseName(str);
 
     if (!m_db.open()) {
 //        QMessageBox::warning(nullptr, tr("Unable to open database"),
@@ -179,7 +182,8 @@ bool sqlite::deleteHero(int heroid)
 bool sqlite::clearHeroTable()
 {
     QSqlQuery sql(m_db);
-    return sql.exec("delete from Hero ");
+    return sql.exec(" DELETE FROM sqlite_sequence WHERE name = ' Hero' ");
+//    DELETE FROM sqlite_sequence WHERE name = 'your table'
 }
 
 bool sqlite::updateHeroInfo(HeroInfo info)

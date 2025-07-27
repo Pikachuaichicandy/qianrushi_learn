@@ -13,6 +13,9 @@ class Widget : public QWidget
 
 public:
     Widget(QWidget *parent = nullptr);
+    void timerEvent(QTimerEvent *);
+    int id1; //定时器标志1
+    int id2; //定时器标志2
     ~Widget();
 
 private:

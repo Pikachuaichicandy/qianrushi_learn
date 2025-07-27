@@ -70,7 +70,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event)
         if (moveFlag != RIGHT) moveFlag = LEFT;
         break;
     case Qt::Key_Space:
-        if (!gameStar) {
+        if (gameStar==false) {
             gameStar = true;
             timer->start(moveSpeed);  // 启动定时器
         } else {

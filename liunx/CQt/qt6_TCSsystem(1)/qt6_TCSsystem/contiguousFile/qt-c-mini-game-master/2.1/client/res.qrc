@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/food/apple.png</file>
+        <file>images/food/banana.png</file>
+        <file>images/food/drug.png</file>
+        <file>images/buttonIcon/pause.png</file>
+        <file>images/buttonIcon/play.png</file>
+        <file>images/buttonIcon/store.png</file>
+        <file>music/backgroundMusic.mp3</file>
+        <file>music/bruise.mp3</file>
+        <file>music/eat.mp3</file>
+        <file>music/over.mp3</file>
+        <file>config/playList.json</file>
+        <file>images/snake/body/body0.png</file>
+        <file>images/snake/head/head0/headDown.png</file>
+        <file>images/snake/head/head0/headLeft.png</file>
+        <file>images/snake/head/head0/headRight.png</file>
+        <file>images/snake/head/head0/headTop.png</file>
+        <file>images/snake/head/head1/headDown.png</file>
+        <file>images/snake/head/head1/headLeft.png</file>
+        <file>images/snake/head/head1/headRight.png</file>
+        <file>images/snake/head/head1/headTop.png</file>
+        <file>images/snake/head/head2/headDown.png</file>
+        <file>images/snake/head/head2/headLeft.png</file>
+        <file>images/snake/head/head2/headRight.png</file>
+        <file>images/snake/head/head2/headTop.png</file>
+        <file>images/snake/body/body1.png</file>
+        <file>images/background/background1.jpg</file>
+    </qresource>
+</RCC>

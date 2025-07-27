@@ -1,0 +1,14 @@
+# ninja log v5
+3	374	7491311797097144	snake_autogen/timestamp	adc65a6fbbb628f2
+3	374	7491311797097144	snake_autogen/mocs_compilation.cpp	adc65a6fbbb628f2
+3	374	7491311797097144	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/build-snake1.1u7a33u5b9au7248-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/snake_autogen/timestamp	adc65a6fbbb628f2
+3	374	7491311797097144	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/build-snake1.1u7a33u5b9au7248-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/snake_autogen/mocs_compilation.cpp	adc65a6fbbb628f2
+375	454	7491311799147607	snake_autogen/EWIEGA46WW/qrc_res.cpp	ce46dbd58be4040c
+375	454	7491311799147607	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/build-snake1.1u7a33u5b9au7248-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/snake_autogen/EWIEGA46WW/qrc_res.cpp	ce46dbd58be4040c
+477	581	7491311800433500	CMakeFiles/snake.dir/snake_autogen/EWIEGA46WW/qrc_res.cpp.obj	76b541b2fdf8b7f1
+472	1337	7491311807977556	CMakeFiles/snake.dir/snake.cpp.obj	96180a623eb20956
+459	1508	7491311809693471	CMakeFiles/snake.dir/main.cpp.obj	b5edc6bd1188b23b
+5	392	7491312265861782	snake_autogen/timestamp	adc65a6fbbb628f2
+5	392	7491312265861782	snake_autogen/mocs_compilation.cpp	adc65a6fbbb628f2
+5	392	7491312265861782	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/build-snake1.1u7a33u5b9au7248-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/snake_autogen/timestamp	adc65a6fbbb628f2
+5	392	7491312265861782	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/build-snake1.1u7a33u5b9au7248-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/snake_autogen/mocs_compilation.cpp	adc65a6fbbb628f2

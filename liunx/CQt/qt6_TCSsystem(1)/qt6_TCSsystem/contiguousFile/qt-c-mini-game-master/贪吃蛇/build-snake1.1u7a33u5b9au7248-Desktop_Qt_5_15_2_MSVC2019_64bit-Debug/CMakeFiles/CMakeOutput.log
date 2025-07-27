@@ -1,0 +1,34 @@
+The system is: Windows - 10.0.19045 - AMD64
+Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+Compiler: D:/vs/2022/VC/Tools/MSVC/14.40.33807/bin/HostX64/x64/cl.exe 
+Build flags: -DQT_QML_DEBUG
+Id flags:  
+
+The output was:
+0
+用于 x64 的 Microsoft (R) C/C++ 优化编译器 19.40.33813 版
+版权所有(C) Microsoft Corporation。保留所有权利。
+
+CMakeCXXCompilerId.cpp
+Microsoft (R) Incremental Linker Version 14.40.33813.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+/out:CMakeCXXCompilerId.exe 
+CMakeCXXCompilerId.obj 
+
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.exe"
+
+Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CMakeCXXCompilerId.obj"
+
+The CXX compiler identification is MSVC, found in "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/build-snake1.1u7a33u5b9au7248-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/CMakeFiles/3.24.2/CompilerIdCXX/CMakeCXXCompilerId.exe"
+
+Detecting CXX compiler ABI info compiled with the following output:
+Change Dir: F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/build-snake1.1u7a33u5b9au7248-Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/CMakeFiles/CMakeTmp
+
+Run Build Command(s):D:/vs/2022/Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe cmTC_82d84 && [1/2] Building CXX object CMakeFiles\cmTC_82d84.dir\CMakeCXXCompilerABI.cpp.obj
+注意: 包含文件:  D:\Qt\Tools\CMake_64\share\cmake-3.24\Modules\CMakeCompilerABI.h
+[2/2] Linking CXX executable cmTC_82d84.exe
+
+
+

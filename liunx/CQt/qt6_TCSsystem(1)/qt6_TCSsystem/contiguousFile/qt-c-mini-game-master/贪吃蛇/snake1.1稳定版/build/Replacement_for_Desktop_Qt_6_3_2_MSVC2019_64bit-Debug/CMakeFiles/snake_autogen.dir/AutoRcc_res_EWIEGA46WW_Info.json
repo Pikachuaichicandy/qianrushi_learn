@@ -1,0 +1,29 @@
+{
+	"BUILD_DIR" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/snake_autogen",
+	"CMAKE_BINARY_DIR" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248",
+	"CMAKE_SOURCE_DIR" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248",
+	"INCLUDE_DIR" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/snake_autogen/include",
+	"INPUTS" : 
+	[
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/snake/common/body.png",
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/snake/common/headLeft.png",
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/snake/common/headTop.png",
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/snake/common/headDown.png",
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/snake/common/headRight.png",
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/food/drug.png",
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/food/apple.png",
+		"F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/images/food/banana.png"
+	],
+	"LOCK_FILE" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/snake_autogen.dir/AutoRcc_res_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "res" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_res.cpp",
+	"RCC_EXECUTABLE" : "D:/Qt/5.15.2/msvc2017/bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/snake_autogen.dir/AutoRcc_res_EWIEGA46WW_Used.txt",
+	"SOURCE" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/res.qrc",
+	"VERBOSITY" : 0
+}

@@ -1,0 +1,12 @@
+# ninja log v5
+3	221	0	CMakeFiles/snake_autogen	f56fe4895b394069
+3	221	0	snake_autogen/mocs_compilation.cpp	f56fe4895b394069
+3	221	0	snake_autogen/include/ui_gamewidget.h	f56fe4895b394069
+3	221	0	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/snake_autogen	f56fe4895b394069
+3	221	0	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/snake_autogen/mocs_compilation.cpp	f56fe4895b394069
+3	221	0	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/snake_autogen/include/ui_gamewidget.h	f56fe4895b394069
+222	311	7491311231127935	snake_autogen/EWIEGA46WW/qrc_res.cpp	3550857972fa2bb2
+222	311	7491311231127935	F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/snake_autogen/EWIEGA46WW/qrc_res.cpp	3550857972fa2bb2
+335	452	7491311232540455	CMakeFiles/snake.dir/snake_autogen/EWIEGA46WW/qrc_res.cpp.obj	e8a756e548ace4b
+311	1358	7491311241592239	CMakeFiles/snake.dir/snake_autogen/mocs_compilation.cpp.obj	84d3f42f0cdd909
+316	1389	7491311241902309	CMakeFiles/snake.dir/main.cpp.obj	12a1fa928a941c70

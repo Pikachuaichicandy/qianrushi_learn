@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>down.png</file>
+        <file>duang.png</file>
+        <file>forward.png</file>
+    </qresource>
+</RCC>

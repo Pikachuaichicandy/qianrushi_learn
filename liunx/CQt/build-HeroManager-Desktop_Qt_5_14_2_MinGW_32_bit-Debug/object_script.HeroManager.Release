@@ -1,0 +1,10 @@
+release/dlg_addhero.o
+release/main.o
+release/heromanagerwidget.o
+release/page_login.o
+release/sqlite.o
+release/qrc_res.o
+release/moc_dlg_addhero.o
+release/moc_heromanagerwidget.o
+release/moc_page_login.o
+release/moc_sqlite.o

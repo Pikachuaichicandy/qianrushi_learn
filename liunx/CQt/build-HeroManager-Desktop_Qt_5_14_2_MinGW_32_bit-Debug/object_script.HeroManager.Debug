@@ -1,0 +1,10 @@
+debug/dlg_addhero.o
+debug/main.o
+debug/heromanagerwidget.o
+debug/page_login.o
+debug/sqlite.o
+debug/qrc_res.o
+debug/moc_dlg_addhero.o
+debug/moc_heromanagerwidget.o
+debug/moc_page_login.o
+debug/moc_sqlite.o

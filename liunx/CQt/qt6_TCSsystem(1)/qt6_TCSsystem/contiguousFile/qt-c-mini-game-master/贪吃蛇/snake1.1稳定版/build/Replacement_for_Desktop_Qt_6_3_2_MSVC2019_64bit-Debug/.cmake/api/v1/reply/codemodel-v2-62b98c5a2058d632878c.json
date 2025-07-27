@@ -1,0 +1,70 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"hasInstallRule" : true,
+					"jsonFile" : "directory-.-Debug-a0c98b78d9156c442541.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.5"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "snake",
+					"targetIndexes" : 
+					[
+						0,
+						1
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "snake::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-snake-Debug-a2920b9e888d4aa104dc.json",
+					"name" : "snake",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "snake_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-snake_autogen-Debug-fab2602e9f48a10753a0.json",
+					"name" : "snake_autogen",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug",
+		"source" : "F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/\u8d2a\u5403\u86c7/snake1.1\u7a33\u5b9a\u7248"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 6
+	}
+}

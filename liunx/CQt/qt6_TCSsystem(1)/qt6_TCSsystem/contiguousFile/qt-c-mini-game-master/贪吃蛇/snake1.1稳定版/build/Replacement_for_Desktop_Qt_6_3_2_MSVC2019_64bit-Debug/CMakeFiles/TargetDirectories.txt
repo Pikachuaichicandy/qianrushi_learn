@@ -1,0 +1,7 @@
+F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/snake.dir
+F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/edit_cache.dir
+F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/rebuild_cache.dir
+F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/list_install_components.dir
+F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/install.dir
+F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/install/local.dir
+F:/qt6project/qt6_TCSsystem/contiguousFile/qt-c-mini-game-master/贪吃蛇/snake1.1稳定版/build/Replacement_for_Desktop_Qt_6_3_2_MSVC2019_64bit-Debug/CMakeFiles/snake_autogen.dir

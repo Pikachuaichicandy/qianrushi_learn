@@ -1,0 +1,12 @@
+{
+    "backgroundMusic":[
+        "qrc:/music/backgroundMusic.mp3"
+    ],
+    "snakeMusic":[
+        "qrc:/music/bruise.mp3",
+        "qrc:/music/eat.mp3"
+    ],
+    "endMusic":[
+        "qrc:/music/over.mp3"
+    ]
+}

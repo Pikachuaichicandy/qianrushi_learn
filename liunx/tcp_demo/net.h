@@ -13,7 +13,7 @@
 #include <arpa/inet.h>
 // 3. 宏定义
 #define SERV_PORT   5001
-#define SERV_IP_ADDR     "192.168.1.100"
+#define SERV_IP_ADDR     "192.168.226.128"
 #define BACKLOG         5   
 #define QUIT_STR    "quit"
 #endif

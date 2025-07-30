@@ -42,12 +42,13 @@ int main(void)
     char buf [BUFSIZ];
     struct sockaddr_in cin;
     socklen_t addrlen = sizeof(cin);
+    printf("UDP Server is running\n");
     while(1)
     {
         bzero(buf,BUFSIZ);
-       if(receivefrom(fd,buf,BUFSIZ-1,0,(struct sockaddr *)&cin,&addrlen) < 0)
+       if(recvfrom(fd,buf,BUFSIZ-1,0,(struct sockaddr *)&cin,&addrlen) < 0)
        {
-           perror("receivefrom");
+           perror("recvfrom");
            continue;
        }
        char ipv4_addr[16];

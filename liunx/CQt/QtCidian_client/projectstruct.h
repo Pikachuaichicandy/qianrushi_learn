@@ -17,6 +17,15 @@ struct  StudentInformationData
     QString  imagepath; //图片地址
 };
 
+struct MSGInfo{
+    QString word;
+    int type;               // 消息类型（R/L/Q/H）
+//    char name[N];           // 用户名
+//    char data[256];         // 数据（密码/单词/查询结果）
+    QString name;
+    int pass;
+};
+
 
 
 

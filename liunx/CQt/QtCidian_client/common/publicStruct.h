@@ -4,6 +4,12 @@
 #include <QPoint>
 #include<QString>
 
+#define N 32
+#define R 1   // 用户注册
+#define L 2   // 用户登录
+#define Q 3   // 单词查询
+#define H 4   // 历史记录
+
 struct Configdata
 {
     QString   databaseName;
@@ -24,7 +30,5 @@ enum class DatabaseType {
     SQLServer,
     ODBC
 };  //目前支持的数据类型
-
-
 
 #endif // PUBLICSTRUCT_H

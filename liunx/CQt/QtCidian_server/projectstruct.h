@@ -3,6 +3,16 @@
 
 #include<QString>
 #include <QMetaType>
+
+#include <QObject>
+#include <QSql>
+#include <QSqlQuery>
+#include <QDebug>
+#include <QSqlError>
+#include <QVector>
+#include <QCoreApplication>
+#include <QFile>
+#include <QDir>
 struct  StudentInformationData
 {
     int          serialnumber;  //序号

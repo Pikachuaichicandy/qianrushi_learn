@@ -43,6 +43,8 @@ private slots:
     void comeback();//显示此窗口
     void Delete();//退餐
 public:
+    int j = 0; //校验订单数
+    int j1 = 0;//历史校验订单数
     float m_sum;//总额
     Ui::Widget *ui;
     QSqlDatabase db;

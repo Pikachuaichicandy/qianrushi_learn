@@ -31,6 +31,8 @@ private slots:
     void on_pushButton_clicked();
     void on_pushButton_2_clicked();
     
+    void on_pushButton_4_clicked();
+
 private:
     Ui::childdorm *ui;
     FoodInfo F_head;//订单结构体

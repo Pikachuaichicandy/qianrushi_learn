@@ -78,7 +78,8 @@ void Widget::Init()//初始化
     }
     );
 
-    QString ip = "192.168.79.129";
+//    QString ip = "192.168.79.129";
+    QString ip = "192.168.174.129";
     qint16 port = 8888;
     tcpsocket->connectToHost(QHostAddress(ip),port);
 
@@ -129,7 +130,6 @@ void Widget::flag(QByteArray array) //服务端信息判断
         MenuVec = menuVec;
         Menu_print();
     }
-    //
     else if(strcmp(menuVec[0].food,"chef_in")==0)
     {
         Chef_in(menuVec);
@@ -160,7 +160,6 @@ void Widget::Chef_in(vector<MenuInfo> menuVec)//上菜
             strcpy(FoodVec[i].table,"0");
         }
     }
-    //
     child->getvec(FoodVec_no,FoodVec_in);
 }
 
@@ -215,10 +214,17 @@ void Widget::Menu_print()//打印菜单
 
 void Widget::on_pushButton_3_clicked()//提交订单
 {
+//    // 添加数据校验
+//    if(j1>j)
+//    {
+//        QMessageBox::warning(this, "提示", "请先选择主餐或饮品！");
+//        return;
+//    }
+
+
     QString S = ui->lineEdit->text(); //桌号
     char s[5];
     QByteArray ba = S.toLocal8Bit();
-    //
     memcpy(s,ba.data(),ba.size()+1);  //加1是为了最后的终结符，否则转换回来的时候不知道什么时候截止
 
     if(S == "\0")
@@ -277,6 +283,11 @@ void Widget::on_pushButton_clicked()//添加菜品
     int flag = 0;
     char number[10];
     QString s = ui->lineEdit_2->text();//餐品序号
+    QString text = ui->lineEdit_3->text();//份数
+    if(s == "\0" || text == "\0" )
+    {
+        QMessageBox::warning(this,"提示!","请填写桌号,份数!");
+    }
     QByteArray ba = s.toLocal8Bit();
     memcpy(number,ba.data(),ba.size()+1);//加1是为了最后的终结符，否则转换回来的时候不知道什么时候截止
     QTableWidgetItem *column = new QTableWidgetItem(s);

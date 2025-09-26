@@ -67,7 +67,6 @@ void childdorm::getvec(vector<FoodInfo> FoodVec_no,vector<FoodInfo> FoodVec_in) 
     ui->tableWidget->setRowCount(0);
     ui->lineEdit->setText(FoodVec_no[1].table);
 
-    //
     for (int j=1;j<(FoodVec_no).size();j++)
     {
         int rowcount = ui->tableWidget->rowCount();
@@ -146,7 +145,6 @@ void childdorm::Delete_food()  //退菜操作
             ui->tableWidget->removeRow(currow);//删除当前行
         }
 
-        //
         for(int i = 0; i < FoodVec_No->size(); i++)
         {
             if((strcmp(FoodVec_No->at(i).number,F_head.number) == 0) && (strcmp(FoodVec_No->at(i).post,F_head.post) == 0))
@@ -180,4 +178,10 @@ void childdorm::on_pushButton_clicked()//催餐
 void childdorm::on_pushButton_2_clicked()//退餐
 {
     emit Inter_delete();
+}
+
+void childdorm::on_pushButton_4_clicked()
+{
+    this->hide();
+    emit Interface();
 }

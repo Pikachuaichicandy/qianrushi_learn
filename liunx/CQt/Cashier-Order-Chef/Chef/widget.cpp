@@ -61,7 +61,8 @@ void Widget::Init()//初始化
     }
     );
 
-    QString ip = "192.168.79.129";
+//    QString ip = "192.168.79.129";
+    QString ip = " 192.168.174.129";
     qint16 port = 8888;
     tcpsocket->connectToHost(QHostAddress(ip),port);
 }

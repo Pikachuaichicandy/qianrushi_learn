@@ -37,10 +37,15 @@ Widget::Widget(QWidget *parent) :
 
     Init();
     client();
+    // 添加定时器实现自动刷新
+    refreshTimer = new QTimer(this);
+    connect(refreshTimer, &QTimer::timeout, this, &Widget::on_pushButton_3_clicked);
+    refreshTimer->start(2000); // 每2秒自动刷新一次
 }
 
 Widget::~Widget()
 {
+    delete refreshTimer; // 释放定时器资源
     delete ui;
 }
 

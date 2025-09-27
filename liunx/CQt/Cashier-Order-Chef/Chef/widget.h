@@ -1,11 +1,12 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
+#include <QTimer>
 #include <QWidget>
-#include<QSqlQuery>
+#include <QSqlQuery>
 #include <vector>
-#include<QString>
-#include<QTcpSocket>
+#include <QString>
+#include <QTcpSocket>
 #include "structural.h"
 using namespace std;
 namespace Ui {
@@ -36,6 +37,8 @@ public:
     vector<FoodInfo> FoodVec;//订单容器
     vector<FoodInfo> foodVec;//通用容器
     QTcpSocket *tcpsocket;
+private:
+     QTimer *refreshTimer;
 };
 
 #endif // WIDGET_H

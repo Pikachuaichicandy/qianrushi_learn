@@ -214,14 +214,12 @@ void Widget::Menu_print()//打印菜单
 
 void Widget::on_pushButton_3_clicked()//提交订单
 {
-//    // 添加数据校验
-//    if(j1>j)
-//    {
-//        QMessageBox::warning(this, "提示", "请先选择主餐或饮品！");
-//        return;
-//    }
-
-
+    // 添加数据校验
+    if(isnew_order == false)
+    {
+        QMessageBox::warning(this, "提示", "请先添加订单！");
+        return;
+    }
     QString S = ui->lineEdit->text(); //桌号
     char s[5];
     QByteArray ba = S.toLocal8Bit();
@@ -270,7 +268,7 @@ void Widget::on_pushButton_3_clicked()//提交订单
         memcpy(a1.data(),FoodVec.data(),sizeof(FoodInfo)*FoodVec.size());
         tcpsocket->write(a1);
     }
-
+    isnew_order = false;
 }
 
 void Widget::on_pushButton_4_clicked()//退出
@@ -329,7 +327,7 @@ void Widget::on_pushButton_clicked()//添加菜品
     {
         QMessageBox::warning(this,"提示","输入有误!");
     }
-
+    isnew_order = true;
 }
 
 void Widget::on_pushButton_2_clicked() //删除

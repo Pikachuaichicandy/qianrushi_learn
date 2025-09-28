@@ -37,10 +37,15 @@ childdorm::childdorm(QWidget *parent) :
 
     Init();
     client();
+//    // 添加定时器实现自动刷新
+//    refreshTimer = new QTimer(this);
+//    connect(refreshTimer, &QTimer::timeout, this, &childdorm::on_pushButton_5_clicked);
+//    refreshTimer->start(2000); // 每2秒自动刷新一次
 }
 
 childdorm::~childdorm()
 {
+//    delete refreshTimer; // 释放定时器资源
     delete ui;
 }
 

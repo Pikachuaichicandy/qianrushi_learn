@@ -20,7 +20,8 @@ change_price::change_price(QWidget *parent) :
     setPalette(pal);
 
     db = QSqlDatabase::addDatabase("QMYSQL"); //添加数据库
-    db.setHostName("192.168.79.129");
+//    db.setHostName("192.168.79.129");
+    db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("12345678");
     db.setPort(3306);

@@ -20,7 +20,8 @@ Add_drinks::Add_drinks(QWidget *parent) :
     setPalette(pal);
 
     db = QSqlDatabase::addDatabase("QMYSQL"); //添加数据库
-    db.setHostName("192.168.79.129");
+//    db.setHostName("192.168.79.129");
+    db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("12345678");
     db.setPort(3306);
@@ -88,7 +89,11 @@ void Add_drinks::on_pushButton_clicked()//添加饮品
           {
               QMessageBox::warning(this,"提示","添加失败!");
           }
-
+          strcpy(M_head.food,s1.c_str());
+          strcpy(M_head.number, std::to_string(count).c_str());
+          strcpy(M_head.price ,s2.c_str());
+          strcpy(M_head.state , s3.c_str());
+          MenuVec.push_back(M_head);//菜单信息放入容器中
     }
 }
 

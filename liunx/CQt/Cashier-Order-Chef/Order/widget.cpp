@@ -278,6 +278,14 @@ void Widget::on_pushButton_4_clicked()//退出
 
 void Widget::on_pushButton_clicked()//添加菜品
 {
+//    // 在发送订单前更新餐桌状态
+//    QSqlQuery query(db);
+//    query.prepare("UPDATE 餐桌 SET 状态='使用中' WHERE 桌号=:table");
+//    query.bindValue(":table", FoodVec[1].table);
+//    query.exec();
+//    QByteArray a1;
+//    a1.resize(sizeof(FoodInfo)*FoodVec.size());
+
     int flag = 0;
     char number[10];
     QString s = ui->lineEdit_2->text();//餐品序号

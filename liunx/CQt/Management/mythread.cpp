@@ -58,7 +58,6 @@ void mythread::Flag(QByteArray array)//客户端信息标志位判断
     {
         cashier_finish();
     }
-
 }
 
 void mythread::cashier_in()//收银登录
@@ -114,7 +113,7 @@ void mythread::cashier_refresh()//收银刷新餐桌状态
        // QString str = QString("错误信息:%1,%2").arg(error.driverText()).arg(error.databaseText());
        // QMessageBox::warning(this,"提示",str);
     }
-
+    strcpy(Foodvec[0].food,"cashier_refresh");
     while (query.next())   //读取下一行信息
     {
         QString str = query.value("桌号").toString();
@@ -127,7 +126,6 @@ void mythread::cashier_refresh()//收银刷新餐桌状态
         memcpy(table,ba.data(),ba.size()+1);//加1是为了最后的终结符，否则转换回来的时候不知道什么时候截止
         ba = str1.toLocal8Bit();
         memcpy(food,ba.data(),ba.size()+1);//加1是为了最后的终结符，否则转换回来的时候不知道什么时候截止
-
         strcpy(F_head.table, table);
         strcpy(F_head.food, food);
         Foodvec.push_back(F_head);//餐桌状态放入容器中
@@ -147,6 +145,25 @@ void mythread::cashier_finish()//收银结算
     QString Name = QString(Foodvec[0].post);    //收银人
     QSqlQuery query(db);
     char str[100];
+    // 在结算订单后更新餐桌状态
+    char str1[256];
+    //    sprintf(str1, "UPDATE 餐桌 SET 状态='未使用中' WHERE 桌号='%s'", n.toStdString().c_str());
+    sprintf(str1, "UPDATE 餐桌 SET 状态='未使用' WHERE 桌号=%d", n);
+    if(!query.exec(str1))
+    {
+        qDebug() << "状态更新失败:" << query.lastError().text();
+        db.rollback(); // 回滚事务
+        return;
+    }
+    db.commit(); // 显式提交
+
+    // 添加网络通信超时检测
+    if(!tcpsocket->waitForBytesWritten(3000))
+    {
+        qDebug() << "网络写入超时";
+        tcpsocket->abort();
+    }
+
 
     Foodvec = foodvec[n];//获得顾客订单信息
 
@@ -212,8 +229,11 @@ void mythread::cashier_finish()//收银结算
         sprintf(str,"insert into 账单详情 values('%s','%s','%s','%s','%s','%s','%s','%s')",num,table,number,food,price,quatity,post,name);
         query.exec(str);
     }
-
-
+    strcpy(Foodvec[0].food,"cashier_refresh");
+    QByteArray a1;
+    a1.resize(sizeof(FoodInfo)*Foodvec.size());
+    memcpy(a1.data(),Foodvec.data(),sizeof(MenuInfo)*Foodvec.size()*2+Foodvec.size()*50);
+    cashier_socket->write(a1);
 }
 
 void mythread::order_menu()//向顾客端发送菜单
@@ -327,6 +347,27 @@ void mythread::order_food()//订单处理
     QSqlQuery query(db);
     char str[100];
 
+    // 在发送订单前更新餐桌状态
+    char str1[256];
+//    sprintf(str1, "UPDATE 餐桌 SET 状态='使用中' WHERE 桌号='%s'", n.toStdString().c_str());
+    sprintf(str1, "UPDATE 餐桌 SET 状态='使用中' WHERE 桌号=%d", n);
+    query.exec(str1);
+//    if(!query.exec(str1)) {
+//        qDebug() << "状态更新失败:" << query.lastError().text();
+//        db.rollback(); // 回滚事务
+//        return;
+//    }
+//    db.commit(); // 显式提交
+
+//    // 添加网络通信超时检测
+//    if(!tcpsocket->waitForBytesWritten(3000))
+//    {
+//        qDebug() << "网络写入超时";
+//        tcpsocket->abort();
+//    }
+
+
+
     //清除估顾客未做餐品
     QString Table= Foodvec[1].table;
     std::string s1 = Table.toStdString();
@@ -364,7 +405,9 @@ void mythread::Init()//初始化
 {
     //tcpsocket=socket;
     db = QSqlDatabase::addDatabase("QMYSQL"); //添加数据库
-    db.setHostName("192.168.79.129");
+//    db.setHostName("192.168.79.129");
+    db.setHostName("192.168.174.129");
+    db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("12345678");
     db.setPort(3306);

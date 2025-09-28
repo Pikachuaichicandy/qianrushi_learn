@@ -1,5 +1,6 @@
 #ifndef ADD_DRINKS_H
 #define ADD_DRINKS_H
+#include"structural.h"
 
 #include <QWidget>
 #include<QSqlQuery>
@@ -9,6 +10,7 @@
 #include<QMessageBox>//对话框
 #include<QSqlError>
 #include <QDesktopWidget>
+
 namespace Ui {
 class Add_drinks;
 }
@@ -29,6 +31,8 @@ private slots:
 private:
     Ui::Add_drinks *ui;
     QSqlDatabase db;
+    vector<MenuInfo> MenuVec;//菜单容器
+    MenuInfo M_head;//菜单结构体
 };
 
 #endif // ADD_DRINKS_H

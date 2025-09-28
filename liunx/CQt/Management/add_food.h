@@ -1,5 +1,6 @@
 #ifndef ADD_FOOD_H
 #define ADD_FOOD_H
+#include "structural.h"
 
 #include <QWidget>
 #include<QSqlQuery>
@@ -29,6 +30,8 @@ private slots:
 private:
     Ui::Add_food *ui;
     QSqlDatabase db;
+    vector<MenuInfo> MenuVec;//菜单容器
+    MenuInfo M_head;//菜单结构体
 };
 
 #endif // ADD_FOOD_H

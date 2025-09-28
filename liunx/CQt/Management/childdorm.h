@@ -4,7 +4,6 @@
 #include <QWidget>
 #include<QTcpSocket>//建立套接字的类
 #include<QTcpServer>//监听套接字的类
-#include <vector>
 #include<QSqlDatabase>
 #include <QDesktopWidget>
 #include<QSqlError>
@@ -25,7 +24,6 @@
 #include "modify_stutus.h"
 #include "bill.h"
 #include <QDesktopWidget>
-using namespace std;
 
 namespace Ui {
 class childdorm;

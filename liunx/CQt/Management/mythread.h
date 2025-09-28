@@ -1,6 +1,8 @@
 #ifndef MYTHREAD_H
 #define MYTHREAD_H
 
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
 #include<QThread>
 #include<QObject>
 #include<QWidget>
@@ -12,7 +14,6 @@
 #include<string>
 #include<QDateTime>
 #include"structural.h"
-using namespace std;
 class mythread:public QThread
 {
     Q_OBJECT

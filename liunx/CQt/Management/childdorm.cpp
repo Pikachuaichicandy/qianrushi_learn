@@ -32,7 +32,8 @@ childdorm::childdorm(QWidget *parent) :
 
 
     db = QSqlDatabase::addDatabase("QMYSQL"); //添加数据库
-    db.setHostName("192.168.79.129");
+//    db.setHostName("192.168.79.129");
+    db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("12345678");
     db.setPort(3306);
@@ -356,49 +357,131 @@ void childdorm::on_pushButton_19_clicked()//刷新账单
 
 void childdorm::on_pushButton_17_clicked()//刷新饮品
 {
+    // 1. 清空容器中的旧数据
+    MenuVec.clear();
+    // 2. 重新从数据库加载最新数据，注意要使用带db参数的QSqlQuery
+    QSqlQuery query(db); // 必须传递db参数以使用正确的数据库连接
+    bool ret = query.exec("select *from 饮品");//数据库执行语句
+    if(!ret)
+    {
+        QSqlError error = query.lastError();
+        QString str = QString("错误信息:%1,%2").arg(error.driverText()).arg(error.databaseText());
+        QMessageBox::warning(this,"提示",str);
+        return; // 如果查询失败，提前返回
+    }
+
+    // 3. 将数据库中的数据读取到容器中
+    while (query.next())   //读取下一行信息
+    {
+        QString str = query.value("序号").toString();
+        QString str1 = query.value("饮品名").toString();
+        QString str2 = query.value("价格").toString();
+        QString str3 = query.value("状态").toString();
+
+        char Number[10];
+        char food[100];
+        char Price[10];
+        char State[20];
+        QByteArray ba = str.toLocal8Bit();
+        memcpy(Number,ba.data(),ba.size()+1);
+        ba = str1.toLocal8Bit();
+        memcpy(food,ba.data(),ba.size()+1);
+        ba = str2.toLocal8Bit();
+        memcpy(Price,ba.data(),ba.size()+1);
+        ba = str3.toLocal8Bit();
+        memcpy(State,ba.data(),ba.size()+1);
+        strcpy(M_head.number,Number);
+        strcpy(M_head.food, food);
+        strcpy(M_head.price ,Price);
+        strcpy(M_head.state , State);
+        MenuVec.push_back(M_head);
+    }
     Menu_frint();
 }
 
 void childdorm::on_pushButton_12_clicked()//刷新菜单
 {
-     Menu_frint();
+    // 1. 清空容器中的旧数据
+    MenuVec.clear();
+    // 2. 重新从数据库加载最新数据，注意要使用带db参数的QSqlQuery
+    QSqlQuery query(db); // 必须传递db参数以使用正确的数据库连接
+    bool ret = query.exec("select *from 菜单");//数据库执行语句
+    if(!ret)
+    {
+        QSqlError error = query.lastError();
+        QString str = QString("错误信息:%1,%2").arg(error.driverText()).arg(error.databaseText());
+        QMessageBox::warning(this,"提示",str);
+        return; // 如果查询失败，提前返回
+    }
+
+    // 3. 将数据库中的数据读取到容器中
+    while (query.next())   //读取下一行信息
+    {
+        QString str = query.value("序号").toString();
+        QString str1 = query.value("菜名").toString();
+        QString str2 = query.value("价格").toString();
+        QString str3 = query.value("状态").toString();
+
+        char Number[10];
+        char food[100];
+        char Price[10];
+        char State[20];
+        QByteArray ba = str.toLocal8Bit();
+        memcpy(Number,ba.data(),ba.size()+1);
+        ba = str1.toLocal8Bit();
+        memcpy(food,ba.data(),ba.size()+1);
+        ba = str2.toLocal8Bit();
+        memcpy(Price,ba.data(),ba.size()+1);
+        ba = str3.toLocal8Bit();
+        memcpy(State,ba.data(),ba.size()+1);
+        strcpy(M_head.number,Number);
+        strcpy(M_head.food, food);
+        strcpy(M_head.price ,Price);
+        strcpy(M_head.state , State);
+        MenuVec.push_back(M_head);
+    }
+
+    // 4. 重新显示菜单
+    Menu_frint();
 }
 
 void childdorm::on_pushButton_4_clicked()//删除用户
 {
-     QSqlQuery query(db);
-     char str[100];
-     //char str1[10];
-     int currow = ui->tableWidget->currentRow();//当前行
-     QString name= ui->tableWidget->item(currow,0)->text();
+    QSqlQuery query(db);
+    char str[100];
+    //char str1[10];
+    int currow = ui->tableWidget->currentRow();//当前行
+    if(currow == -1)
+    {
+        QMessageBox::warning(this,"提示","操作有误!");
+        return;
+    }
+    QString name= ui->tableWidget->item(currow,0)->text();
 
-     std::string s1 = name.toStdString();
+    std::string s1 = name.toStdString();
+    //     else
+    //     {
+    sprintf(str,"delete from 用户 where 用户名 = '%s'",s1.c_str());
 
-     if(currow == -1)
-     {
-         QMessageBox::warning(this,"提示","操作有误!");
-     }
-     else
-     {
-         sprintf(str,"delete from 用户 where 用户名 = '%s'",s1.c_str());
-
-         query.exec(str);
+    if(query.exec(str))
+    {
 
         QString temp=QString::fromUtf8("select 密码 from 用户 where 用户名 ='%1'").arg(name);
-         query.exec(temp);
-          query.next();
-          if(query.value("密码").toString() != "\0")
-          {
-              QMessageBox::warning(this,"提示","删除失败!");
-          }
-          else
-          {
-              ui->tableWidget->removeRow(currow);//删除当前行
-              QMessageBox::warning(this,"提示","删除成功!");
+        query.exec(temp);
+        query.next();
+        if(query.value("密码").toString() != "\0")
+        {
+            QMessageBox::warning(this,"提示","删除失败!");
+        }
+        else
+        {
+            ui->tableWidget->removeRow(currow);//删除当前行
+            QMessageBox::warning(this,"提示","删除成功!");
 
-          }
+        }
 
-     }
+        //     }
+    }
 }
 
 void childdorm::on_pushButton_9_clicked() //删除菜
@@ -406,69 +489,104 @@ void childdorm::on_pushButton_9_clicked() //删除菜
     QSqlQuery query(db);
     char str[100];
     int currow = ui->tableWidget_3->currentRow();//当前行
+    if(currow == -1)
+    {
+        QMessageBox::warning(this,"提示","操作有误!");
+        return;
+    }
     QString number= ui->tableWidget_3->item(currow,0)->text();
 
     std::string s1 = number.toStdString();
-
-    if(currow == -1)
+    //    else
+    //    {
+    sprintf(str,"delete from 菜单 where 序号 = '%s'",s1.c_str());
+    if (query.exec(str))
     {
-        QMessageBox::warning(this,"提示","操作有误!");
+        QString temp=QString::fromUtf8("select 菜名 from 菜单 where 序号 ='%1'").arg(number);
+        query.exec(temp);
+        query.next();
+        if(query.value("菜名").toString() != "\0")
+        {
+            QMessageBox::warning(this,"提示","删除失败!");
+        }
+        else
+        {
+            ui->tableWidget_3->removeRow(currow);//删除当前行
+            QMessageBox::warning(this,"提示","删除成功!");
+
+        }
     }
     else
     {
-        sprintf(str,"delete from 菜单 where 序号 = '%s'",s1.c_str());
-
-        query.exec(str);
-
-         QString temp=QString::fromUtf8("select 菜名 from 菜单 where 序号 ='%1'").arg(number);
-         query.exec(temp);
-         query.next();
-         if(query.value("菜名").toString() != "\0")
-         {
-             QMessageBox::warning(this,"提示","删除失败!");
-         }
-         else
-         {
-             ui->tableWidget_3->removeRow(currow);//删除当前行
-             QMessageBox::warning(this,"提示","删除成功!");
-
-         }
-
+        QMessageBox::warning(this, "提示", "操作失败!");
     }
+
+    //    }
 }
 
-void childdorm::on_pushButton_14_clicked()//删除饮品
+void childdorm::on_pushButton_14_clicked() // 删除饮品
 {
     QSqlQuery query(db);
     char str[100];
-    int currow = ui->tableWidget_4->currentRow();//当前行
-    QString number= ui->tableWidget_4->item(currow,0)->text();
-
-    std::string s1 = number.toStdString();
-
+    int currow = ui->tableWidget_4->currentRow(); // 当前行
     if(currow == -1)
     {
-        QMessageBox::warning(this,"提示","操作有误!");
+        QMessageBox::warning(this, "提示", "操作有误!");
+        return;
     }
-    else
-    {
-        sprintf(str,"delete from 饮品 where 序号 = '%s'",s1.c_str());
 
-        query.exec(str);
+    QString number = ui->tableWidget_4->item(currow, 0)->text();
+    std::string s1 = number.toStdString();
+    sprintf(str, "delete from 饮品 where 序号 = '%s'", s1.c_str());
 
-         QString temp=QString::fromUtf8("select 饮品名 from 菜单 where 序号 ='%1'").arg(number);
-         query.exec(temp);
-         query.next();
-         if(query.value("饮品名").toString() != "\0")
-         {
-             QMessageBox::warning(this,"提示","删除失败!");
-         }
-         else
-         {
-             ui->tableWidget_4->removeRow(currow);//删除当前行
-             QMessageBox::warning(this,"提示","删除成功!");
+    if (query.exec(str)) {
+        QString temp = QString::fromUtf8("select 饮品名 from 菜单 where 序号 ='%1'").arg(number);
+        query.exec(temp);
+        query.next();
 
-         }
-
+        if(query.value("饮品名").toString().isEmpty()) {
+            ui->tableWidget_4->removeRow(currow); // 删除当前行
+            QMessageBox::information(this, "提示", "删除成功!");
+        } else {
+            QMessageBox::warning(this, "提示", "删除失败!");
+        }
+    } else {
+        QMessageBox::critical(this, "错误", "数据库操作失败！" + query.lastError().text());
     }
 }
+
+
+//void childdorm::on_pushButton_14_clicked()//删除饮品
+//{
+//    QSqlQuery query(db);
+//    char str[100];
+//    int currow = ui->tableWidget_4->currentRow();//当前行
+//    if(currow == -1)
+//    {
+//        QMessageBox::warning(this,"提示","操作有误!");
+//        return;
+//    }
+//    QString number= ui->tableWidget_4->item(currow,0)->text();
+//    std::string s1 = number.toStdString();
+////    else
+////    {
+//        sprintf(str,"delete from 饮品 where 序号 = '%s'",s1.c_str());
+
+//        query.exec(str);
+
+//         QString temp=QString::fromUtf8("select 饮品名 from 菜单 where 序号 ='%1'").arg(number);
+//         query.exec(temp);
+//         query.next();
+//         if(query.value("饮品名").toString() != "\0")
+//         {
+//             QMessageBox::warning(this,"提示","删除失败!");
+//         }
+//         else
+//         {
+//             ui->tableWidget_4->removeRow(currow);//删除当前行
+//             QMessageBox::warning(this,"提示","删除成功!");
+
+//         }
+
+////    }
+//}

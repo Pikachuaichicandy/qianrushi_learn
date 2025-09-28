@@ -1,5 +1,7 @@
 #ifndef STRUCTURAL_H
 #define STRUCTURAL_H
+#include <vector>
+using namespace std;
 
 typedef struct Food
 {
@@ -18,5 +20,8 @@ typedef struct Menu
     char price[10];//价格
     char state[20];//状态
 }MenuInfo;
+
+
+
 
 #endif // STRUCTURAL_H

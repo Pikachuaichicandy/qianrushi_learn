@@ -1,31 +1,5 @@
 qtcreator
 SOURCE /home/book/liunx/Management/点餐.sql;
 sudo mysql -u root -p
-use Order;
-show tables;
-SHOW DATABASES;
+use Order
 CREATE DATABASE database_name;
-
-qmake Admini.pro
-make
-
-./Admini
-
-
-sudo systemctl restart mysql
-sudo nano /etc/mysql/my.cnf
-
-
-远程连接
-sudo nano /etc/mysql/mysql.conf.d/mysqld.cnf
-
-
-sudo systemctl restart mysql
-
-
-GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'yourpassword';
-FLUSH PRIVILEGES;
-
-查询用户
-SELECT user FROM mysql.user;
-

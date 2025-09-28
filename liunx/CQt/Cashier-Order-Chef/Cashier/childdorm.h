@@ -1,6 +1,7 @@
 #ifndef CHILDDORM_H
 #define CHILDDORM_H
 
+#include<QTimer>
 #include <QWidget>
 #include<QSqlQuery>
 #include <vector>
@@ -49,6 +50,8 @@ private:
     FoodInfo F_head;//订单结构体
     vector<FoodInfo> foodVec;//通用订单容器
     vector<FoodInfo> FoodVec;//订单容器
+private:
+     QTimer *refreshTimer;
 
 };
 

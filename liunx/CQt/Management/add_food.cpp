@@ -21,7 +21,8 @@ Add_food::Add_food(QWidget *parent) :
     setPalette(pal);
 
     db = QSqlDatabase::addDatabase("QMYSQL"); //添加数据库
-    db.setHostName("192.168.79.129");
+//    db.setHostName("192.168.79.129");
+    db.setHostName("localhost");
     db.setUserName("root");
     db.setPassword("12345678");
     db.setPort(3306);
@@ -55,7 +56,7 @@ void Add_food::on_pushButton_clicked()//添加菜品
          QString str = QString("错误信息:%1,%2").arg(error.driverText()).arg(error.databaseText());
          QMessageBox::warning(this,"提示",str);
      }
-    int count;//总行数
+    int count = 0;//总行数
     while (query.next())   //读取下一行信息
     {
         count = query.value("序号").toInt();
@@ -69,7 +70,6 @@ void Add_food::on_pushButton_clicked()//添加菜品
     std::string s1 = name.toStdString();
     std::string s2 = price.toStdString();
     std::string s3 = limit.toStdString();
-
     QString temp=QString::fromUtf8("select 序号 from 菜单 where 菜名 ='%1'").arg(name);
     query.exec(temp);
     query.next();
@@ -79,6 +79,7 @@ void Add_food::on_pushButton_clicked()//添加菜品
     }
     else
     {
+        query.clear();
         sprintf(str,"insert into 菜单 values(%d,'%s','%s','%s')",count,s1.c_str(),s2.c_str(),s3.c_str());
         query.exec(str);
          //qDebug()<<str;
@@ -94,6 +95,11 @@ void Add_food::on_pushButton_clicked()//添加菜品
           {
               QMessageBox::warning(this,"提示","添加失败!");
           }
+          strcpy(M_head.food,s1.c_str());
+          strcpy(M_head.number, std::to_string(count).c_str());
+          strcpy(M_head.price ,s2.c_str());
+          strcpy(M_head.state , s3.c_str());
+          MenuVec.push_back(M_head);//菜单信息放入容器中
 
     }
 }

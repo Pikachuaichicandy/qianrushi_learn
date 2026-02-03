@@ -235,56 +235,90 @@ static int __init sr04_init(void)
 		printk("sr04 node find!\r\n");
 	}
 
-	/* 2、 获取设备树中的gpio属性 */
-	/* 获取trig引脚 */
+	/* 2、 获取设备树中的gpio属性，得到LED所使用的LED编号 */
+	// for(i=0;i<GPIO_NUM;i++){
+	// 	sr04.gpios[i].gpio = of_get_named_gpio(sr04.nd, "led-gpios", i);
+	// 	if(sr04.gpios[i].gpio < 0) {
+	// 		printk("can't get gpios[%d], error code: %d\n", i, sr04.gpios[i].gpio);
+	// 		printk("can't get gpios");
+	// 		ret = -EINVAL;
+	// 		goto fail_findnode;	
+	// 	}
+	// 	printk("gpio num[%d] = %d\r\n", i, sr04.gpios[i].gpio); 
+
+	// }
+/* 3、获取并请求GPIO，同时设置方向 */
+	/* 获取并请求trig引脚 */
+	memset(sr04.gpios[0].name, 0, sizeof(sr04.gpios[0].name));
+	sprintf(sr04.gpios[0].name, "sr04_trig");
 	sr04.gpios[0].gpio = of_get_named_gpio(sr04.nd, "trig-gpios", 0);
 	if(sr04.gpios[0].gpio < 0) {
-		printk("can't get trig-gpios, error code: %d\n", sr04.gpios[0].gpio);
+		printk(KERN_ERR "can't get trig-gpios, error code: %d\n", sr04.gpios[0].gpio);
 		ret = -EINVAL;
 		goto fail_findnode;	
 	}
 	printk("trig gpio = %d\r\n", sr04.gpios[0].gpio); 
+	
+	ret = of_gpio_request_one(sr04.nd, "trig-gpios", 0, sr04.gpios[0].name);
+	if(ret < 0) {
+		printk(KERN_ERR "failed to request trig gpio (error: %d), checking if it's in use\r\n", ret);
+		ret = -EBUSY;
+		goto fail_findnode;
+	}
+	
+	/* 设置trig引脚为输出，初始值为low */
+	ret = gpio_direction_output(sr04.gpios[0].gpio, 0);
+	if(ret < 0) {
+		printk(KERN_ERR "can't set trig gpio as output! error: %d\r\n", ret);
+		goto fail_gpio0;
+	}
 
-	/* 获取echo引脚 */
+	/* 获取并请求echo引脚 */
+	memset(sr04.gpios[1].name, 0, sizeof(sr04.gpios[1].name));
+	sprintf(sr04.gpios[1].name, "sr04_echo");
 	sr04.gpios[1].gpio = of_get_named_gpio(sr04.nd, "echo-gpios", 0);
 	if(sr04.gpios[1].gpio < 0) {
-		printk("can't get echo-gpios, error code: %d\n", sr04.gpios[1].gpio);
+		printk(KERN_ERR "can't get echo-gpios, error code: %d\n", sr04.gpios[1].gpio);
 		ret = -EINVAL;
-		goto fail_findnode;	
+		goto fail_gpio0;
 	}
 	printk("echo gpio = %d\r\n", sr04.gpios[1].gpio);
 	
-		/* 3、申请GPIO */
-	for(i = 0; i < GPIO_NUM; i++){
-		memset(sr04.gpios[i].name, 0, sizeof(sr04.gpios[i].name));
-		if(i == 0)
-			sprintf(sr04.gpios[i].name, "sr04_trig");
-		else
-			sprintf(sr04.gpios[i].name, "sr04_echo");
-		
-		ret = gpio_request(sr04.gpios[i].gpio, sr04.gpios[i].name);
-		if(ret < 0) {
-			printk(KERN_ERR "failed to request gpio[%d]\r\n", i);
-		}
-	}
-
-	/* 3、设置GPIO1_IO03为输出，并且输出low*/
-	ret = gpio_direction_output(sr04.gpios[0].gpio, 0);
+	ret = of_gpio_request_one(sr04.nd, "echo-gpios", 0, sr04.gpios[1].name);
 	if(ret < 0) {
-		printk("can't set gpio!\r\n");
+		printk(KERN_ERR "failed to request echo gpio (error: %d), checking if it's in use\r\n", ret);
+		ret = -EBUSY;
+		goto fail_gpio0;
 	}
+	
+	/* 设置echo引脚为输入 */
 	ret = gpio_direction_input(sr04.gpios[1].gpio);
 	if(ret < 0) {
-		printk(KERN_ERR "can't set echo gpio as input!\r\n");
+		printk(KERN_ERR "can't set echo gpio as input! error: %d\r\n", ret);
+		goto fail_gpio1;
 	}
 
-	sr04.gpios[1].irqnum = irq_of_parse_and_map(sr04.nd, 1); 
+	/* 获取中断号 - 设备树中只有一个中断定义，使用索引0 */
+	sr04.gpios[1].irqnum = irq_of_parse_and_map(sr04.nd, 0); 
+	if(sr04.gpios[1].irqnum <= 0) {
+		printk("irq %d is invalid!\r\n", sr04.gpios[1].irqnum);
+		/* 释放申请的GPIO */
+		for(i = 0; i < GPIO_NUM; i++) {
+			gpio_free(sr04.gpios[i].gpio);
+		}
+		return -EINVAL;
+	}
+	
 	/* 申请中断 */
 	sr04.gpios[1].handler = sr04_handler;
 	ret = request_irq(sr04.gpios[1].irqnum, sr04.gpios[1].handler, 
-						 IRQF_TRIGGER_RISING, sr04.gpios[1].name, &sr04);
+						 IRQF_TRIGGER_RISING|IRQF_TRIGGER_FALLING, sr04.gpios[1].name, &sr04);
 	if(ret < 0){
-		printk("irq %d request failed!\r\n", sr04.gpios[1].irqnum);
+		printk("irq %d request failed! (error: %d)\r\n", sr04.gpios[1].irqnum, ret);
+		/* 释放申请的GPIO */
+		for(i = 0; i < GPIO_NUM; i++) {
+			gpio_free(sr04.gpios[i].gpio);
+		}
 		return -EFAULT;
 	}
 	printk("gpio=%d, irqnum=%d\r\n",sr04.gpios[1].gpio, 

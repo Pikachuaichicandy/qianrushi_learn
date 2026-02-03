@@ -16,10 +16,11 @@
 #include <asm/io.h>
 #include <linux/of_irq.h>
 #include <linux/irq.h>
+#include <linux/ioctl.h>
 /***************************************************************
 Copyright © ALIENTEK Co., Ltd. 1998-2029. All rights reserved.
 文件名		: gpio.c
-作者	  	: 左忠凯
+作者	  	: jgb
 版本	   	: V1.0
 描述	   	: 采用pinctrl和gpio子系统驱动LED灯。
 其他	   	: 无                                                                                                                                                                                                                                                                                                                                             
@@ -31,13 +32,51 @@ Copyright © ALIENTEK Co., Ltd. 1998-2029. All rights reserved.
 #define LEDOFF 				0			/* 关灯 */
 #define LEDON 				1			/* 开灯 */
 #define GPIO_NUM            2           /*控制引脚总数*/
+#define CMD_TRIG            3
 
+/* 环形缓冲区 */
+#define BUF_LEN 128
+static u64 g_keys[BUF_LEN];
+static int r, w;
+#define NEXT_POS(x) ((x+1) % BUF_LEN)
+
+static int is_key_buf_empty(void)
+{
+	return (r == w);
+}
+
+static int is_key_buf_full(void)
+{
+	return (r == NEXT_POS(w));
+}
+
+static void put_key(u64 time)
+{
+	if (!is_key_buf_full())
+	{
+		g_keys[w] = time;
+		w = NEXT_POS(w);
+	}
+}
+
+static char get_key(void)
+{
+	u64 key = 0;
+	if (!is_key_buf_empty())
+	{
+		key = g_keys[r];
+		r = NEXT_POS(r);
+	}
+	return key;
+}
+static DECLARE_WAIT_QUEUE_HEAD(gpio_wait);
 
 
 
 /* gpio_info 结构体 */
 struct gpio_info {
-    int gpio;                  /* GPIO 编号 */
+    int gpio; 
+	int key;                 /* GPIO 编号 */
     char name[NAME_MAX];      /* GPIO 名称 */
 	int irqnum;								/* 中断号     */
 	unsigned char value;					/* 按键对应的键值 */
@@ -69,6 +108,27 @@ struct sr04_dev sr04;	/* led设备 */
 
 static irqreturn_t sr04_handler(int irq, void *dev_id)
 {
+	struct sr04_dev *dev = (struct sr04_dev *)dev_id;
+	int val;
+	static u64 rising_time = 0;
+	u64 time;
+	val = gpio_get_value(sr04.gpios[1].gpio);
+	if(val){
+		rising_time = ktime_get_ns();
+	}
+	else{
+		if(rising_time == 0){
+			printk("missing rising interrupt\n");
+			return IRQ_HANDLED;	
+		}
+		time = ktime_get_ns()-rising_time;
+		put_key(time);
+		wake_up_interruptible(&gpio_wait);
+
+
+	}
+
+
 	// struct sr04_dev *dev = (struct sr04_dev *)dev_id;
 
 	// dev->curkeynum = 0;
@@ -93,7 +153,14 @@ static int sr04_open(struct inode *inode, struct file *filp)
  */
 static ssize_t sr04_read(struct file *filp, char __user *buf, size_t cnt, loff_t *offt)
 {
-	return 0;
+	int err;
+	int key;
+	if(is_key_buf_empty() && (filp->f_flags & O_NONBLOCK))
+		return -EAGAIN;
+	wait_event_interruptible(gpio_wait,!is_key_buf_empty());
+	key = get_key();
+	err = copy_to_user(buf,&key,4);
+	return 4;
 }
 
 /*
@@ -106,24 +173,7 @@ static ssize_t sr04_read(struct file *filp, char __user *buf, size_t cnt, loff_t
  */
 static ssize_t sr04_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *offt)
 {
-	// int retvalue;
-	// unsigned char databuf[1];
-	// unsigned char ledstat;
-	// struct sr04_dev *dev = filp->private_data;
-
-	// retvalue = copy_from_user(databuf, buf, cnt);
-	// if(retvalue < 0) {
-	// 	printk("kernel write failed!\r\n");
-	// 	return -EFAULT;
-	// }
-
-	// ledstat = databuf[0];		/* 获取状态值 */
-
-	// if(ledstat == LEDON) {	
-	// 	gpio_set_value(dev->gpio, 0);	/* 打开LED灯 */
-	// } else if(ledstat == LEDOFF) {
-	// 	gpio_set_value(dev->gpio, 1);	/* 关闭LED灯 */
-	// }
+	
 	return 0;
 }
 
@@ -136,6 +186,22 @@ static int sr04_release(struct inode *inode, struct file *filp)
 {
 	return 0;
 }
+//ioctl(fd,CMD,ARG)
+static long sr04_ioctl(struct file *filp, unsigned int command, unsigned long arg)
+{
+	/*send triger*/
+	switch (command)
+	{
+	case CMD_TRIG:
+		{
+			gpio_set_value(sr04.gpios[0].gpio,1);
+			udelay(20);
+			gpio_set_value(sr04.gpios[0].gpio,0);
+		}
+	
+	}
+	return 0;
+}
 
 /* 设备操作函数 */
 static struct file_operations sr04_fops = {
@@ -144,6 +210,7 @@ static struct file_operations sr04_fops = {
 	.read = sr04_read,
 	.write = sr04_write,
 	.release = 	sr04_release,
+	.unlocked_ioctl = sr04_ioctl,
 };
 
 /*
@@ -155,10 +222,12 @@ static int __init sr04_init(void)
 {
 	int ret = 0;
 	unsigned char i = 0;
-
 	/* 设置LED所使用的GPIO */
 	/* 1、获取设备节点：sr04 */
-	sr04.nd = of_find_node_by_path("/gpio");
+	sr04.nd = of_find_node_by_path("/gpioled");
+	if(sr04.nd == NULL) {
+		sr04.nd = of_find_compatible_node(NULL, NULL, "alientek,gpioled");
+	} 
 	if(sr04.nd == NULL) {
 		printk("sr04 node not find!\r\n");
 		return -EINVAL;
@@ -166,25 +235,54 @@ static int __init sr04_init(void)
 		printk("sr04 node find!\r\n");
 	}
 
-	/* 2、 获取设备树中的gpio属性，得到LED所使用的LED编号 */
-	for(i=0;i<GPIO_NUM;i++){
-		sr04.gpios[i].gpio = of_get_named_gpio(sr04.nd, "led-gpios", i);
-		if(sr04.gpios[i].gpio < 0) {
-			printk("can't get gpios[%d], error code: %d\n", i, sr04.gpios[i].gpio);
-			printk("can't get gpios");
-			ret = -EINVAL;
-			goto fail_findnode;	
+	/* 2、 获取设备树中的gpio属性 */
+	/* 获取trig引脚 */
+	sr04.gpios[0].gpio = of_get_named_gpio(sr04.nd, "trig-gpios", 0);
+	if(sr04.gpios[0].gpio < 0) {
+		printk("can't get trig-gpios, error code: %d\n", sr04.gpios[0].gpio);
+		ret = -EINVAL;
+		goto fail_findnode;	
+	}
+	printk("trig gpio = %d\r\n", sr04.gpios[0].gpio); 
 
+	/* 获取echo引脚 */
+	sr04.gpios[1].gpio = of_get_named_gpio(sr04.nd, "echo-gpios", 0);
+	if(sr04.gpios[1].gpio < 0) {
+		printk("can't get echo-gpios, error code: %d\n", sr04.gpios[1].gpio);
+		ret = -EINVAL;
+		goto fail_findnode;	
+	}
+	printk("echo gpio = %d\r\n", sr04.gpios[1].gpio);
+	
+		/* 3、申请GPIO */
+	for(i = 0; i < GPIO_NUM; i++){
+		memset(sr04.gpios[i].name, 0, sizeof(sr04.gpios[i].name));
+		if(i == 0)
+			sprintf(sr04.gpios[i].name, "sr04_trig");
+		else
+			sprintf(sr04.gpios[i].name, "sr04_echo");
+		
+		ret = gpio_request(sr04.gpios[i].gpio, sr04.gpios[i].name);
+		if(ret < 0) {
+			printk(KERN_ERR "failed to request gpio[%d]\r\n", i);
 		}
-		sr04.gpios[1].irqnum = irq_of_parse_and_map(sr04.nd, 1);
-		printk("gpio num[%d] = %d\r\n", i, sr04.gpios[i].gpio); 
-
 	}
 
+	/* 3、设置GPIO1_IO03为输出，并且输出low*/
+	ret = gpio_direction_output(sr04.gpios[0].gpio, 0);
+	if(ret < 0) {
+		printk("can't set gpio!\r\n");
+	}
+	ret = gpio_direction_input(sr04.gpios[1].gpio);
+	if(ret < 0) {
+		printk(KERN_ERR "can't set echo gpio as input!\r\n");
+	}
+
+	sr04.gpios[1].irqnum = irq_of_parse_and_map(sr04.nd, 1); 
 	/* 申请中断 */
-	sr04.gpios[0].handler = sr04_handler;
+	sr04.gpios[1].handler = sr04_handler;
 	ret = request_irq(sr04.gpios[1].irqnum, sr04.gpios[1].handler, 
-						 IRQF_TRIGGER_FALLING|IRQF_TRIGGER_RISING, sr04.gpios[1].name, &sr04);
+						 IRQF_TRIGGER_RISING, sr04.gpios[1].name, &sr04);
 	if(ret < 0){
 		printk("irq %d request failed!\r\n", sr04.gpios[1].irqnum);
 		return -EFAULT;
@@ -192,40 +290,19 @@ static int __init sr04_init(void)
 	printk("gpio=%d, irqnum=%d\r\n",sr04.gpios[1].gpio, 
                                          sr04.gpios[1].irqnum);
 
-	
-	/*申请IO*/
-	for(i=0;i<GPIO_NUM;i++){
-		memset(sr04.gpios[i].name,0,sizeof(sr04.gpios[i].name));
-		sprintf(sr04.gpios[0].name,"triger");
-		sprintf(sr04.gpios[1].name,"echo");
-		ret = gpio_request(sr04.gpios[i].gpio,sr04.gpios[i].name);
-		if(ret<0)
-		{
-		printk("failed to request the led gpio \r\n");
-		return - EINVAL;
-	}
-
-
-	}
-	
-	/* 3、设置GPIO1_IO03为输出，并且输出高电平，默认关闭LED灯 */
-	ret = gpio_direction_output(sr04.gpios[0].gpio, 1);
-	if(ret < 0) {
-		printk("can't set gpio!\r\n");
-	}
 
 	/* 注册字符设备驱动 */
 	/* 1、创建设备号 */
 	if (sr04.major) {		/*  定义了设备号 */
 		sr04.devid = MKDEV(sr04.major, 0);
 		register_chrdev_region(sr04.devid, SR04_CNT, SR04_NAME);
-	} else {						/* 没有定义设备号 */
+	} 
+	else {						/* 没有定义设备号 */
 		alloc_chrdev_region(&sr04.devid, 0, SR04_CNT, SR04_NAME);	/* 申请设备号 */
 		sr04.major = MAJOR(sr04.devid);	/* 获取分配号的主设备号 */
 		sr04.minor = MINOR(sr04.devid);	/* 获取分配号的次设备号 */
 	}
 	printk("sr04 major=%d,minor=%d\r\n",sr04.major, sr04.minor);	
-	
 	/* 2、初始化cdev */
 	sr04.cdev.owner = THIS_MODULE;
 	cdev_init(&sr04.cdev, &sr04_fops);
@@ -245,6 +322,7 @@ static int __init sr04_init(void)
 		return PTR_ERR(sr04.device);
 	}
 	return 0;
+	
 fail_findnode:
      return ret;
 }

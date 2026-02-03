@@ -5,6 +5,7 @@
 #include "fcntl.h"
 #include "stdlib.h"
 #include "string.h"
+#include "sys/ioctl.h"
 /***************************************************************
 Copyright © ALIENTEK Co., Ltd. 1998-2029. All rights reserved.
 文件名		: ledApp.c

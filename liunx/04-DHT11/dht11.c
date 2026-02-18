@@ -50,12 +50,12 @@
 /***************************************************************
 Copyright © ALIENTEK Co., Ltd. 1998-2029. All rights reserved.
 文件名		: dht11.c
-作者	  	: 左忠凯
+作者	  	: 蒋光波
 版本	   	: V1.0
-描述	   	: Linux中断驱动实验
+描述	   	: dht11驱动
 其他	   	: 无
-论坛 	   	: www.openedv.com
-日志	   	: 初版V1.0 2019/7/26 左忠凯创建
+GitHub	   	: https://github.com/Pikachuaichicandy/qianrushi_learn.git
+日志	   	: 初版V1.0 2026/2/18 蒋光波创建
 ***************************************************************/
 #define DHT11_CNT		1			/* 设备号个数 	*/
 #define DHT11_NAME		"dht11"	/* 名字 		*/
@@ -204,7 +204,8 @@ static int gpios_init(void)
 {
 	unsigned char i = 0;
 	int ret = 0;
-    int count = sizeof(gpios)/sizeof(gpios[0]);
+    int err = 0;
+    int count = sizeof(dht11.gpios)/sizeof(dht11.gpios[0]);
 	
 	dht11.nd = of_find_node_by_path("/key");
 	if (dht11.nd== NULL){
@@ -226,20 +227,20 @@ static int gpios_init(void)
 	{	
         memset(dht11.gpios[i].name, 0, sizeof(dht11.gpios[i].name));	/* 缓冲区清零 */
 		sprintf(dht11.gpios[i].name, "dht11%d", i);		/* 组合名字 */
-		gpios[i].irq  = gpio_to_irq(gpios[i].gpio);
+		dht11.gpios[i].irq  = gpio_to_irq(dht11.gpios[i].gpio);
         printk("key%d:gpio=%d, irqnum=%d\r\n",i, dht11.gpios[i].gpio, 
                                          dht11.gpios[i].irq);
 
 		/* 设置DHT11 GPIO引脚的初始状态: output 1 */
-		err = gpio_request(gpios[i].gpio, gpios[i].name);
-		gpio_direction_output(gpios[i].gpio, 1);
-		gpio_free(gpios[i].gpio);
+		err = gpio_request(dht11.gpios[i].gpio, dht11.gpios[i].name);
+		gpio_direction_output(dht11.gpios[i].gpio, 1);
+		gpio_free(dht11.gpios[i].gpio);
 
-		setup_timer(&gpios[i].key_timer, key_timer_expire, (unsigned long)&gpios[i]);
-	 	//timer_setup(&gpios[i].key_timer, key_timer_expire, 0);
-		//gpios[i].key_timer.expires = ~0;
-		//add_timer(&gpios[i].key_timer);
-		//err = request_irq(gpios[i].irq, dht11_isr, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, "100ask_gpio_key", &gpios[i]);
+		setup_timer(&dht11.gpios[i].key_timer, key_timer_expire, (unsigned long)&dht11.gpios[i]);
+	 	//timer_setup(&dht11.gpios[i].key_timer, key_timer_expire, 0);
+		//dht11.gpios[i].key_timer.expires = ~0;
+		//add_timer(&dht11.gpios[i].key_timer);
+		//err = request_irq(dht11.gpios[i].irq, dht11_isr, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, "100ask_gpio_key", &dht11.gpios[i]);
     }
 	// /* 创建定时器 */
 	// init_timer(&dht11.timer);
@@ -281,34 +282,34 @@ static ssize_t dht11_read(struct file *filp, char __user *buf, size_t cnt, loff_
 	g_dht11_irq_cnt = 0;
 
 	/* 1. 发送18ms的低脉冲 */
-	err = gpio_request(gpios[0].gpio, gpios[0].name);
-	gpio_direction_output(gpios[0].gpio, 0);
-	gpio_free(gpios[0].gpio);
+	err = gpio_request(dht11.gpios[0].gpio, dht11.gpios[0].name);
+	gpio_direction_output(dht11.gpios[0].gpio, 0);
+	gpio_free(dht11.gpios[0].gpio);
 
 	mdelay(18);
-	gpio_direction_input(gpios[0].gpio);  /* 引脚变为输入方向, 由上拉电阻拉为1 */
+	gpio_direction_input(dht11.gpios[0].gpio);  /* 引脚变为输入方向, 由上拉电阻拉为1 */
 
 	/* 2. 注册中断 */
-	err = request_irq(gpios[0].irq, dht11_isr, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, gpios[0].name, &gpios[0]);
-	mod_timer(&gpios[0].key_timer, jiffies + 20);	
+	err = request_irq(dht11.gpios[0].irq, dht11_isr, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, dht11.gpios[0].name, &dht11.gpios[0]);
+	mod_timer(&dht11.gpios[0].key_timer, jiffies + 20);	
 
 	/* 3. 休眠等待数据 */
 	wait_event_interruptible(gpio_wait, !is_key_buf_empty());
 
-	free_irq(gpios[0].irq, &gpios[0]);
+	free_irq(dht11.gpios[0].irq, &dht11.gpios[0]);
 
-	desc = gpio_to_desc(gpios[0].gpio);
+	desc = gpio_to_desc(dht11.gpios[0].gpio);
 
 	//printk("%s %s %d\n", __FILE__, __FUNCTION__, __LINE__);
 
 	/* 设置DHT11 GPIO引脚的初始状态: output 1 */
-	err = gpio_request(gpios[0].gpio, gpios[0].name);
+	err = gpio_request(dht11.gpios[0].gpio, dht11.gpios[0].name);
 	if (err)
 	{
 		printk("%s %s %d, gpio_request err\n", __FILE__, __FUNCTION__, __LINE__);
 	}
-	gpio_direction_output(gpios[0].gpio, 1);
-	gpio_free(gpios[0].gpio);
+	gpio_direction_output(dht11.gpios[0].gpio, 1);
+	gpio_free(dht11.gpios[0].gpio);
 
 
 	/* 4. copy_to_user */
@@ -458,13 +459,13 @@ static int __init dht11_init(void)
 static void __exit dht11_exit(void)
 {
 	unsigned int i = 0;
-    int count = sizeof(gpios)/sizeof(gpios[0]);
+    int count = sizeof(dht11.gpios)/sizeof(dht11.gpios[0]);
 	/* 删除定时器 */
 	del_timer_sync(&dht11.timer);	/* 删除定时器 */
 		
 	/* 释放中断 */
 	for (i = 0; i < count; i++) {
-		free_irq(dht11.gpios[i].irqnum, &dht11);
+		free_irq(dht11.gpios[i].irq, &dht11);
 		gpio_free(dht11.gpios[i].gpio);
 	}
 	cdev_del(&dht11.cdev);

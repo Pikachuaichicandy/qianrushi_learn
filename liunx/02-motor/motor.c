@@ -54,7 +54,7 @@ void set_pins_for_motor(int index)
 	int i;
 	for (i = 0; i < 4; i++)
 	{
-		gpio_set_value(gpios[i].gpio,motor_pin_ctr[index]&(1<<i) ? 1 : 0);
+		gpio_set_value(motor.gpios[i].gpio,motor_pin_ctr[index]&(1<<i) ? 1 : 0);
 	}
 }
 
@@ -79,6 +79,7 @@ static ssize_t motor_write(struct file *filp, const char __user *buf, size_t cnt
 {
 	int ker_buf[2];
 	int err;
+	int step;
 	if(cnt !=8)
 		return -EINVAL;
 	err =copy_from_user(ker_buf,buf,cnt);
@@ -114,7 +115,6 @@ static ssize_t motor_write(struct file *filp, const char __user *buf, size_t cnt
  */
 static int motor_release(struct inode *inode, struct file *filp)
 {
-	struct motor_dev *dev = filp->private_data;
 	return 0;
 }
 
@@ -134,7 +134,6 @@ static int __init motor_init(void)
 {
 	int ret = 0;
 	unsigned char i = 0;
-	int count = sizeof(gpios)/sizeof(gpios[0]);
 
 	/* 1、获取设备节点 */
 	motor.nd = of_find_node_by_path("/gpioled");
@@ -154,7 +153,7 @@ static int __init motor_init(void)
 
 	/* 2、获取设备树中的gpio属性 */
 	for(i = 0; i < GPIO_NUM; i++){
-		motor.gpios[i].gpio = of_get_named_gpio_flags(motor.nd, "led-gpios", i);
+		motor.gpios[i].gpio = of_get_named_gpio(motor.nd, "led-gpios", i);
 		if(motor.gpios[i].gpio < 0) {
 			printk(KERN_ERR "can't get gpios[%d], error code: %d\n", i, motor.gpios[i].gpio);
 			ret = -EINVAL;
@@ -165,11 +164,8 @@ static int __init motor_init(void)
 	/* 3、申请GPIO */
 	for(i = 0; i < GPIO_NUM; i++){
 		memset(motor.gpios[i].name, 0, sizeof(motor.gpios[i].name));
-		sprintf(motor.irqkeydesc[i].name, "GPIO%d", i);		/* 组合名字 */
+		sprintf(motor.gpios[i].name, "motor_GPIO%d", i);		/* 组合名字 */
 		ret = gpio_request(motor.gpios[i].gpio, motor.gpios[i].name);
-		for (i = 0:i<count;i++){
-		gpio_direction_output(gpios[i].gpio,0);
-		}
 		if(ret < 0) {
 			printk(KERN_ERR "failed to request gpio[%d]\r\n", i);
 			goto fail_gpio_request;
@@ -177,10 +173,12 @@ static int __init motor_init(void)
 	}
 
 	/* 4、设置GPIO方向 */
-	ret = gpio_direction_output(motor.gpios[0].gpio, 0); // 初始化为低电平
-	if(ret < 0) {
-		printk(KERN_ERR "can't set trig gpio as output!\r\n");
-		goto fail_gpio_dir;
+	for(i = 0; i < GPIO_NUM; i++){
+		ret = gpio_direction_output(motor.gpios[i].gpio, 0); // 初始化为低电平
+		if(ret < 0) {
+			printk(KERN_ERR "can't set gpio[%d] as output!\r\n", i);
+			goto fail_gpio_dir;
+		}
 	}
 	
 

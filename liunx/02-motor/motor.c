@@ -20,53 +20,14 @@
 
 #define motor_CNT			1		  	/* 设备号个数 */
 #define motor_NAME		"motor"	/* 名字 */
-#define GPIO_NUM            2           /*控制引脚总数*/
+#define GPIO_NUM            4           /*控制引脚总数*/
 #define CMD_TRIG            3
 
-/* 环形缓冲区 */
-#define BUF_LEN 128
-static u64 g_keys[BUF_LEN];
-static int r, w;
-#define NEXT_POS(x) ((x+1) % BUF_LEN)
-
-static int is_key_buf_empty(void)
-{
-	return (r == w);
-}
-
-static int is_key_buf_full(void)
-{
-	return (NEXT_POS(w) == r);
-}
-
-static void put_key(u64 time)
-{
-	if (!is_key_buf_full())
-	{
-		g_keys[w] = time;
-		w = NEXT_POS(w);
-	}
-}
-
-static u64 get_key(void)
-{
-	u64 key = 0;
-	if (!is_key_buf_empty())
-	{
-		key = g_keys[r];
-		r = NEXT_POS(r);
-	}
-	return key;
-}
-
-static DECLARE_WAIT_QUEUE_HEAD(gpio_wait);
 
 /* gpio_info 结构体 */
 struct gpio_info {
     int gpio; 
     char name[NAME_MAX];      /* GPIO 名称 */
-	int irqnum;				/* 中断号     */
-	int active_low;			/* 是否低电平有效 */
 };
 
 /* gpio设备结构体 */
@@ -82,7 +43,20 @@ struct motor_dev{
 	u64 last_rising_time;	/* 记录最后一次上升沿时间 */
 };
 
+/*马达引脚设置数组*/
+static int motor_pin_ctr[8]= {0x2,0x3,0x1,0x9,0x8,0xc,0x4,0x6};
+static int motor_index = 0;
+
 struct motor_dev motor;	/* motor设备 */
+
+void set_pins_for_motor(int index)
+{
+	int i;
+	for (i = 0; i < 4; i++)
+	{
+		gpio_set_value(gpios[i].gpio,motor_pin_ctr[index]&(1<<i) ? 1 : 0);
+	}
+}
 
 /*
  * @description		: 打开设备
@@ -90,15 +64,48 @@ struct motor_dev motor;	/* motor设备 */
 static int motor_open(struct inode *inode, struct file *filp)
 {
 	filp->private_data = &motor;
-	motor.last_rising_time = 0;  // 重置时间
 	return 0;
 }
 
 /*
  * @description		: 向设备写数据 
  */
+/*
+Int buf[2]
+buf[0] = 步进的次数 > 0 ：逆时针；<0:顺时针步进
+Buf[1] = medlay；
+*/
 static ssize_t motor_write(struct file *filp, const char __user *buf, size_t cnt, loff_t *offt)
 {
+	int ker_buf[2];
+	int err;
+	if(cnt !=8)
+		return -EINVAL;
+	err =copy_from_user(ker_buf,buf,cnt);
+	if(ker_buf[0]>0){
+		/*ni shi zhen*/
+		for (step =0;step <ker_buf[0];step++)
+		{
+			set_pins_for_motor(motor_index);
+			mdelay(ker_buf[1]);
+			motor_index--;
+			if(motor_index == -1)
+				motor_index = 7;
+		}
+	}
+	else
+	{
+		/*shun shi zhen*/
+		ker_buf[0] = 0 -ker_buf[0];
+		for (step =0;step <ker_buf[0];step++)
+		{
+			set_pins_for_motor(motor_index);
+			mdelay(ker_buf[1]);
+			motor_index++;
+			if(motor_index == 8)
+				motor_index = 0;
+		}
+	}
 	return 0;
 }
 
@@ -108,33 +115,9 @@ static ssize_t motor_write(struct file *filp, const char __user *buf, size_t cnt
 static int motor_release(struct inode *inode, struct file *filp)
 {
 	struct motor_dev *dev = filp->private_data;
-	dev->last_rising_time = 0;
 	return 0;
 }
 
-/*
- * @description		: ioctl控制函数
- */
-static long motor_ioctl(struct file *filp, unsigned int command, unsigned long arg)
-{
-	struct motor_dev *dev = filp->private_data;
-	
-	switch (command)
-	{
-	case CMD_TRIG:
-		{
-			// 发送10μs的高电平脉冲
-			gpio_set_value(dev->gpios[0].gpio, 1);
-			udelay(20);
-			gpio_set_value(dev->gpios[0].gpio, 0);
-			printk(KERN_DEBUG "Trigger sent\n");
-			break;
-		}
-	default:
-		return -ENOTTY;
-	}
-	return 0;
-}
 
 /* 设备操作函数 */
 static struct file_operations motor_fops= {
@@ -142,7 +125,6 @@ static struct file_operations motor_fops= {
 	.open = motor_open,
 	.write = motor_write,
 	.release = motor_release,
-	.unlocked_ioctl = motor_ioctl,
 };
 
 /*
@@ -152,11 +134,7 @@ static int __init motor_init(void)
 {
 	int ret = 0;
 	unsigned char i = 0;
-	enum of_gpio_flags flags;
-
-	/* 初始化环形缓冲区 */
-	r = w = 0;
-	motor.last_rising_time = 0;
+	int count = sizeof(gpios)/sizeof(gpios[0]);
 
 	/* 1、获取设备节点 */
 	motor.nd = of_find_node_by_path("/gpioled");
@@ -176,27 +154,22 @@ static int __init motor_init(void)
 
 	/* 2、获取设备树中的gpio属性 */
 	for(i = 0; i < GPIO_NUM; i++){
-		motor.gpios[i].gpio = of_get_named_gpio_flags(motor.nd, "led-gpios", i, &flags);
+		motor.gpios[i].gpio = of_get_named_gpio_flags(motor.nd, "led-gpios", i);
 		if(motor.gpios[i].gpio < 0) {
 			printk(KERN_ERR "can't get gpios[%d], error code: %d\n", i, motor.gpios[i].gpio);
 			ret = -EINVAL;
 			goto fail_get_gpio;
 		}
-		motor.gpios[i].active_low = (flags & OF_GPIO_ACTIVE_LOW) ? 1 : 0;
-		printk(KERN_INFO "gpio num[%d] = %d, active_%s\n", 
-		       i, motor.gpios[i].gpio, 
-		       motor.gpios[i].active_low ? "low" : "high");
 	}
 
 	/* 3、申请GPIO */
 	for(i = 0; i < GPIO_NUM; i++){
 		memset(motor.gpios[i].name, 0, sizeof(motor.gpios[i].name));
-		if(i == 0)
-			sprintf(motor.gpios[i].name, "motor_trig");
-		else
-			sprintf(motor.gpios[i].name, "motor_echo");
-		
+		sprintf(motor.irqkeydesc[i].name, "GPIO%d", i);		/* 组合名字 */
 		ret = gpio_request(motor.gpios[i].gpio, motor.gpios[i].name);
+		for (i = 0:i<count;i++){
+		gpio_direction_output(gpios[i].gpio,0);
+		}
 		if(ret < 0) {
 			printk(KERN_ERR "failed to request gpio[%d]\r\n", i);
 			goto fail_gpio_request;
@@ -219,11 +192,6 @@ static int __init motor_init(void)
 		ret = alloc_chrdev_region(&motor.devid, 0, motor_CNT, motor_NAME);
 		motor.major = MAJOR(motor.devid);
 		motor.minor = MINOR(motor.devid);
-	}
-	
-	if(ret < 0) {
-		printk(KERN_ERR "register chrdev region failed!\r\n");
-		goto fail_irq;
 	}
 	
 	printk(KERN_INFO "motor major=%d,minor=%d\r\n", motor.major, motor.minor);	
@@ -261,8 +229,6 @@ fail_class:
 fail_cdev:
 	cdev_del(&motor.cdev);
 	unregister_chrdev_region(motor.devid, motor_CNT);
-fail_irq:
-	free_irq(motor.gpios[1].irqnum, &motor);
 fail_gpio_dir:
 fail_gpio_request:
 	for(i = 0; i < GPIO_NUM; i++){

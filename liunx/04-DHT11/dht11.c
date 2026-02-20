@@ -1,50 +1,23 @@
-#include "asm-generic/errno-base.h"
-#include "asm-generic/gpio.h"
-#include "linux/jiffies.h"
 #include <linux/module.h>
-#include <linux/poll.h>
-#include <linux/delay.h>
 #include <linux/fs.h>
 #include <linux/errno.h>
-#include <linux/miscdevice.h>
 #include <linux/kernel.h>
-#include <linux/major.h>
-#include <linux/mutex.h>
-#include <linux/proc_fs.h>
-#include <linux/seq_file.h>
-#include <linux/stat.h>
 #include <linux/init.h>
 #include <linux/device.h>
-#include <linux/tty.h>
-#include <linux/kmod.h>
 #include <linux/gfp.h>
-#include <linux/gpio/consumer.h>
 #include <linux/platform_device.h>
 #include <linux/of_gpio.h>
 #include <linux/of_irq.h>
 #include <linux/interrupt.h>
 #include <linux/irq.h>
 #include <linux/slab.h>
-#include <linux/fcntl.h>
 #include <linux/timer.h>
 #include <linux/types.h>
-#include <linux/kernel.h>
 #include <linux/delay.h>
-#include <linux/ide.h>
-#include <linux/init.h>
-#include <linux/module.h>
-#include <linux/errno.h>
-#include <linux/gpio.h>
 #include <linux/cdev.h>
-#include <linux/device.h>
 #include <linux/of.h>
 #include <linux/of_address.h>
-#include <linux/of_gpio.h>
 #include <linux/semaphore.h>
-#include <linux/timer.h>
-#include <linux/of_irq.h>
-#include <linux/irq.h>
-#include <asm/mach/map.h>
 #include <asm/uaccess.h>
 #include <asm/io.h>
 /***************************************************************
@@ -149,8 +122,12 @@ static DECLARE_WAIT_QUEUE_HEAD(gpio_wait);
 // static void key_timer_expire(struct timer_list *t)
 static void key_timer_expire(unsigned long data)
 {
-	// 解析数据, 放入环形buffer, 唤醒APP
-	parse_dht11_datas();
+	struct gpio_desc *desc = (struct gpio_desc *)data;
+	// 定时器超时：数据读取失败
+	printk("DHT11 read timeout\n");
+	put_key(-1);
+	put_key(-1);
+	wake_up_interruptible(&gpio_wait);
 }
 
 
@@ -181,6 +158,15 @@ static irqreturn_t dht11_isr(int irq, void *dev_id)
 		del_timer(&gpio_desc->key_timer);
 		parse_dht11_datas();
 	}
+	else if (g_dht11_irq_cnt > 84)
+	{
+		/* 数据过多，出错 */
+		printk("DHT11 data overflow\n");
+		del_timer(&gpio_desc->key_timer);
+		put_key(-1);
+		put_key(-1);
+		wake_up_interruptible(&gpio_wait);
+	}
 
 	return IRQ_HANDLED;
 }
@@ -207,17 +193,17 @@ static int gpios_init(void)
     int err = 0;
     int count = sizeof(dht11.gpios)/sizeof(dht11.gpios[0]);
 	
-	dht11.nd = of_find_node_by_path("/key");
+	dht11.nd = of_find_node_by_path("/gpioled");
 	if (dht11.nd== NULL){
-		printk("key node not find!\r\n");
+		printk("gpioled node not find!\r\n");
 		return -EINVAL;
 	} 
 
 	/* 提取GPIO */
 	for (i = 0; i < KEY_NUM; i++) {
-		dht11.gpios[i].gpio = of_get_named_gpio(dht11.nd ,"gpioled", i);
+		dht11.gpios[i].gpio = of_get_named_gpio(dht11.nd ,"led-gpios", i);
 		if (dht11.gpios[i].gpio < 0) {
-			printk("can't get key%d\r\n", i);
+			printk("can't get gpio%d\r\n", i);
 		}
 	}
 
@@ -225,7 +211,12 @@ static int gpios_init(void)
 
 	for (i = 0; i < count; i++)
 	{	
-        memset(dht11.gpios[i].name, 0, sizeof(dht11.gpios[i].name));	/* 缓冲区清零 */
+        /* 为name字段分配内存 */
+        dht11.gpios[i].name = kzalloc(10, GFP_KERNEL);
+        if (!dht11.gpios[i].name) {
+            printk("Failed to allocate memory for name\r\n");
+            return -ENOMEM;
+        }
 		sprintf(dht11.gpios[i].name, "dht11%d", i);		/* 组合名字 */
 		dht11.gpios[i].irq  = gpio_to_irq(dht11.gpios[i].gpio);
         printk("key%d:gpio=%d, irqnum=%d\r\n",i, dht11.gpios[i].gpio, 
@@ -236,7 +227,15 @@ static int gpios_init(void)
 		gpio_direction_output(dht11.gpios[i].gpio, 1);
 		gpio_free(dht11.gpios[i].gpio);
 
-		setup_timer(&dht11.gpios[i].key_timer, key_timer_expire, (unsigned long)&dht11.gpios[i]);
+		/* 初始化定时器 */
+		init_timer(&dht11.gpios[i].key_timer);
+		dht11.gpios[i].key_timer.function = key_timer_expire;
+		dht11.gpios[i].key_timer.data = (unsigned long)&dht11.gpios[i];
+		/* 激活定时器，但设置一个很远的过期时间 */
+		dht11.gpios[i].key_timer.expires = ~0;
+		add_timer(&dht11.gpios[i].key_timer);
+
+		// setup_timer(&dht11.gpios[i].key_timer, key_timer_expire, (unsigned long)&dht11.gpios[i]);
 	 	//timer_setup(&dht11.gpios[i].key_timer, key_timer_expire, 0);
 		//dht11.gpios[i].key_timer.expires = ~0;
 		//add_timer(&dht11.gpios[i].key_timer);
@@ -291,7 +290,13 @@ static ssize_t dht11_read(struct file *filp, char __user *buf, size_t cnt, loff_
 
 	/* 2. 注册中断 */
 	err = request_irq(dht11.gpios[0].irq, dht11_isr, IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING, dht11.gpios[0].name, &dht11.gpios[0]);
-	mod_timer(&dht11.gpios[0].key_timer, jiffies + 20);	
+	if (err) {
+		printk("Failed to request IRQ\n");
+		return -EIO;
+	}
+	
+	/* 设置定时器超时时间为100ms */
+	mod_timer(&dht11.gpios[0].key_timer, jiffies + msecs_to_jiffies(100));	
 
 	/* 3. 休眠等待数据 */
 	wait_event_interruptible(gpio_wait, !is_key_buf_empty());
@@ -463,10 +468,11 @@ static void __exit dht11_exit(void)
 	/* 删除定时器 */
 	del_timer_sync(&dht11.timer);	/* 删除定时器 */
 		
-	/* 释放中断 */
+	/* 释放中断和内存 */
 	for (i = 0; i < count; i++) {
 		free_irq(dht11.gpios[i].irq, &dht11);
 		gpio_free(dht11.gpios[i].gpio);
+		kfree(dht11.gpios[i].name);	/* 释放name字段内存 */
 	}
 	cdev_del(&dht11.cdev);
 	unregister_chrdev_region(dht11.devid, DHT11_CNT);

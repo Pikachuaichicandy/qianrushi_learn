@@ -23,13 +23,6 @@
 #define GPIO_NUM            4           /*控制引脚总数*/
 #define CMD_TRIG            3
 
-
-/* gpio_info 结构体 */
-struct gpio_info {
-    int gpio; 
-    char name[NAME_MAX];      /* GPIO 名称 */
-};
-
 /* gpio设备结构体 */
 struct motor_dev{
 	dev_t devid;			/* 设备号 	 */
@@ -39,8 +32,10 @@ struct motor_dev{
 	int major;				/* 主设备号	  */
 	int minor;				/* 次设备号   */  
 	struct device_node	*nd; /* 设备节点 */
-	struct gpio_info gpios[GPIO_NUM];
-	u64 last_rising_time;	/* 记录最后一次上升沿时间 */
+	int an1_gpio;                      /* an1引脚GPIO编号 */
+    int an2_gpio;                      /* an2引脚GPIO编号 */
+	int an3_gpio;                      /* an3引脚GPIO编号 */
+    int an4_gpio;                      /* an4引脚GPIO编号 */
 };
 
 /*马达引脚设置数组*/
@@ -51,13 +46,16 @@ struct motor_dev motor;	/* motor设备 */
 
 void set_pins_for_motor(int index)
 {
-	int i;
-	for (i = 0; i < 4; i++)
-	{
-		gpio_set_value(motor.gpios[i].gpio,motor_pin_ctr[index]&(1<<i) ? 1 : 0);
-	}
+	/* 根据步进索引设置4个GPIO引脚的状态 */
+	gpio_set_value(motor.an1_gpio, motor_pin_ctr[index] & (1 << 0) ? 1 : 0);
+	gpio_set_value(motor.an2_gpio, motor_pin_ctr[index] & (1 << 1) ? 1 : 0);
+	gpio_set_value(motor.an3_gpio, motor_pin_ctr[index] & (1 << 2) ? 1 : 0);
+	gpio_set_value(motor.an4_gpio, motor_pin_ctr[index] & (1 << 3) ? 1 : 0);
+	
+	/* 更新当前步进索引 */
+	motor_index = index;
 }
-
+ 
 /*
  * @description		: 打开设备
  */
@@ -118,7 +116,6 @@ static int motor_release(struct inode *inode, struct file *filp)
 	return 0;
 }
 
-
 /* 设备操作函数 */
 static struct file_operations motor_fops= {
 	.owner = THIS_MODULE,
@@ -152,35 +149,92 @@ static int __init motor_init(void)
 	printk(KERN_INFO "motor node found: %s\r\n", motor.nd->name);
 
 	/* 2、获取设备树中的gpio属性 */
-	for(i = 0; i < GPIO_NUM; i++){
-		motor.gpios[i].gpio = of_get_named_gpio(motor.nd, "led-gpios", i);
-		if(motor.gpios[i].gpio < 0) {
-			printk(KERN_ERR "can't get gpios[%d], error code: %d\n", i, motor.gpios[i].gpio);
-			ret = -EINVAL;
-			goto fail_get_gpio;
-		}
-	}
+	/* 获取an1引脚GPIO编号 */
+    motor.an1_gpio = of_get_named_gpio(motor.nd, "ain1-gpios", 0);
+    if (motor.an1_gpio < 0) {
+        printk(KERN_ERR "motor: failed to get ain1 GPIO! error: %d\n", motor.an1_gpio);
+        return -EINVAL;
+    }
+    printk(KERN_INFO "motor: ain1_gpio = %d\n", motor.an1_gpio);
+
+    /* 获取an2引脚GPIO编号 */
+    motor.an2_gpio = of_get_named_gpio(motor.nd, "ain2-gpios", 0);
+    if (motor.an2_gpio < 0) {
+        printk(KERN_ERR "motor: failed to get ain2 GPIO! error: %d\n", motor.an2_gpio);
+        return -EINVAL;
+    }
+    printk(KERN_INFO "motor: ain2_gpio = %d\n", motor.an2_gpio);
+
+	/* 获取an3引脚GPIO编号 */
+    motor.an3_gpio = of_get_named_gpio(motor.nd, "ain3-gpios", 0);
+    if (motor.an3_gpio < 0) {
+        printk(KERN_ERR "motor: failed to get ain3 GPIO! error: %d\n", motor.an3_gpio);
+        return -EINVAL;
+    }
+    printk(KERN_INFO "motor: ain3_gpio = %d\n", motor.an3_gpio);
+
+	/* 获取an4引脚GPIO编号 */
+    motor.an4_gpio = of_get_named_gpio(motor.nd, "ain4-gpios", 0);
+    if (motor.an4_gpio < 0) {
+        printk(KERN_ERR "motor: failed to get ain4 GPIO! error: %d\n", motor.an4_gpio);
+        return -EINVAL;
+    }
+    printk(KERN_INFO "motor: ain4_gpio = %d\n", motor.an4_gpio);
 
 	/* 3、申请GPIO */
-	for(i = 0; i < GPIO_NUM; i++){
-		memset(motor.gpios[i].name, 0, sizeof(motor.gpios[i].name));
-		sprintf(motor.gpios[i].name, "motor_GPIO%d", i);		/* 组合名字 */
-		ret = gpio_request(motor.gpios[i].gpio, motor.gpios[i].name);
-		if(ret < 0) {
-			printk(KERN_ERR "failed to request gpio[%d]\r\n", i);
-			goto fail_gpio_request;
-		}
-	}
+    ret = gpio_request(motor.an1_gpio, "motor_an1");
+    if(ret < 0) {
+        printk(KERN_ERR "motor: request an1 GPIO failed!\n");
+        return ret;
+    }
+   
+    ret = gpio_request(motor.an2_gpio, "motor_an2");
+    if(ret < 0) {
+        printk(KERN_ERR "motor: request an2 GPIO failed!\n");
+        gpio_free(motor.an1_gpio);
+        return ret;
+    }
+
+	ret = gpio_request(motor.an3_gpio, "motor_an3");
+    if(ret < 0) {
+        printk(KERN_ERR "motor: request an3 GPIO failed!\n");
+        gpio_free(motor.an1_gpio);
+		gpio_free(motor.an2_gpio);
+        return ret;
+    }
+	ret = gpio_request(motor.an4_gpio, "motor_an4");
+    if(ret < 0) {
+        printk(KERN_ERR "motor: request an4 GPIO failed!\n");
+        gpio_free(motor.an1_gpio);
+		gpio_free(motor.an2_gpio);
+		gpio_free(motor.an3_gpio);
+        return ret;
+    }
 
 	/* 4、设置GPIO方向 */
-	for(i = 0; i < GPIO_NUM; i++){
-		ret = gpio_direction_output(motor.gpios[i].gpio, 0); // 初始化为低电平
-		if(ret < 0) {
-			printk(KERN_ERR "can't set gpio[%d] as output!\r\n", i);
-			goto fail_gpio_dir;
-		}
-	}
-	
+    ret = gpio_direction_output(motor.an1_gpio, 0);  
+    if(ret < 0) {
+        printk(KERN_ERR "motor: set an1 GPIO direction failed!\n");
+		goto fail_gpio_dir;
+    }
+
+	ret = gpio_direction_output(motor.an2_gpio, 0);  
+    if(ret < 0) {
+        printk(KERN_ERR "motor: set an2 GPIO direction failed!\n");
+		goto fail_gpio_dir;
+    }
+
+	ret = gpio_direction_output(motor.an3_gpio, 0);  
+    if(ret < 0) {
+        printk(KERN_ERR "motor: set an3 GPIO direction failed!\n");
+		goto fail_gpio_dir;
+    }
+
+	ret = gpio_direction_output(motor.an4_gpio, 0);  
+    if(ret < 0) {
+        printk(KERN_ERR "motor: set an4 GPIO direction failed!\n");
+		goto fail_gpio_dir;
+    }
 
 	/* 6、注册字符设备驱动 */
 	if (motor.major) {		/* 定义了设备号 */
@@ -228,12 +282,15 @@ fail_cdev:
 	cdev_del(&motor.cdev);
 	unregister_chrdev_region(motor.devid, motor_CNT);
 fail_gpio_dir:
-fail_gpio_request:
-	for(i = 0; i < GPIO_NUM; i++){
-		if(motor.gpios[i].gpio >= 0)
-			gpio_free(motor.gpios[i].gpio);
-	}
-fail_get_gpio:
+	/* 释放所有已申请的GPIO */
+	if (motor.an1_gpio >= 0)
+		gpio_free(motor.an1_gpio);
+	if (motor.an2_gpio >= 0)
+		gpio_free(motor.an2_gpio);
+	if (motor.an3_gpio >= 0)
+		gpio_free(motor.an3_gpio);
+	if (motor.an4_gpio >= 0)
+		gpio_free(motor.an4_gpio);
 	return ret;
 }
 
@@ -251,9 +308,14 @@ static void __exit motor_exit(void)
 	unregister_chrdev_region(motor.devid, motor_CNT);
 	
 	/* 释放GPIO */
-	for(i = 0; i < GPIO_NUM; i++){
-		gpio_free(motor.gpios[i].gpio);
-	}
+	if (motor.an1_gpio >= 0)
+		gpio_free(motor.an1_gpio);
+	if (motor.an2_gpio >= 0)
+		gpio_free(motor.an2_gpio);
+	if (motor.an3_gpio >= 0)
+		gpio_free(motor.an3_gpio);
+	if (motor.an4_gpio >= 0)
+		gpio_free(motor.an4_gpio);
 	
 	printk(KERN_INFO "motor driver exit\n");
 }

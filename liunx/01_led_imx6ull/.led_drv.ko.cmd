@@ -1,0 +1,1 @@
+cmd_/home/book/Desktop/01_led_imx6ull/led_drv.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/Desktop/01_led_imx6ull/led_drv.ko /home/book/Desktop/01_led_imx6ull/led_drv.o /home/book/Desktop/01_led_imx6ull/led_drv.mod.o ;  true

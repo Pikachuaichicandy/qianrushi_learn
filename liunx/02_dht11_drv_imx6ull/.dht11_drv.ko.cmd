@@ -1,0 +1,1 @@
+cmd_/home/book/Desktop/02_dht11_drv_imx6ull/dht11_drv.ko := arm-buildroot-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/book/Desktop/02_dht11_drv_imx6ull/dht11_drv.ko /home/book/Desktop/02_dht11_drv_imx6ull/dht11_drv.o /home/book/Desktop/02_dht11_drv_imx6ull/dht11_drv.mod.o ;  true

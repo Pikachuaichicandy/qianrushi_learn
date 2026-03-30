@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.ko := arm-linux-gnueabihf-ld -r -EL -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.ko /home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.o /home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.mod.o;  true

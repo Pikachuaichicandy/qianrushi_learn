@@ -1,0 +1,2 @@
+/home/fanwenhao/project/smartHome/driver/hc-sr04/hc-sr04.o
+

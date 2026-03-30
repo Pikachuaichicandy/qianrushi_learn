@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/dth11_driver/modules.order := {   echo /home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.ko; :; } | awk '!x[$$0]++' - > /home/fanwenhao/project/smartHome/driver/dth11_driver/modules.order

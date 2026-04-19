@@ -1,0 +1,1 @@
+cmd_/home/alientek/linux/nfs/rootfs/driver/21_iic/ap3216c.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/alientek/linux/nfs/rootfs/driver/21_iic/ap3216c.ko /home/alientek/linux/nfs/rootfs/driver/21_iic/ap3216c.o /home/alientek/linux/nfs/rootfs/driver/21_iic/ap3216c.mod.o

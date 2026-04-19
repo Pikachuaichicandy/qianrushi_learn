@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.mod := { echo  /home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.o;  echo; } > /home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.mod

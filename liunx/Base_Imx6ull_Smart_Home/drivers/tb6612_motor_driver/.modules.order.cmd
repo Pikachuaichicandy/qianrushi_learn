@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/tb6612_motor_driver/modules.order := {   echo /home/fanwenhao/project/smartHome/driver/tb6612_motor_driver/tb6612_motor.ko; :; } | awk '!x[$$0]++' - > /home/fanwenhao/project/smartHome/driver/tb6612_motor_driver/modules.order

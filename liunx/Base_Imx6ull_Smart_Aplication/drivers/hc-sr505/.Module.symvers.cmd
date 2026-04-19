@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hc-sr505/Module.symvers := sed 's/\.ko$$/\.o/' /home/fanwenhao/project/smartHome/driver/hc-sr505/modules.order | scripts/mod/modpost -m -a  -o /home/fanwenhao/project/smartHome/driver/hc-sr505/Module.symvers -e    -w -T -

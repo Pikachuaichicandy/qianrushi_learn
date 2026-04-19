@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/led_driver/modules.order := {   echo /home/fanwenhao/project/smartHome/driver/led_driver/led.ko; :; } | awk '!x[$$0]++' - > /home/fanwenhao/project/smartHome/driver/led_driver/modules.order

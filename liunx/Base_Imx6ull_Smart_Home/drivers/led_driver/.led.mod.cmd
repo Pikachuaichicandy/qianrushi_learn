@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/led_driver/led.mod := { echo  /home/fanwenhao/project/smartHome/driver/led_driver/led.o;  echo; } > /home/fanwenhao/project/smartHome/driver/led_driver/led.mod

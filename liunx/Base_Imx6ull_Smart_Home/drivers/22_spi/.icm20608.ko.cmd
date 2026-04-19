@@ -1,0 +1,1 @@
+cmd_/home/alientek/linux/nfs/rootfs/home/root/drivers/22_spi/icm20608.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/alientek/linux/nfs/rootfs/home/root/drivers/22_spi/icm20608.ko /home/alientek/linux/nfs/rootfs/home/root/drivers/22_spi/icm20608.o /home/alientek/linux/nfs/rootfs/home/root/drivers/22_spi/icm20608.mod.o

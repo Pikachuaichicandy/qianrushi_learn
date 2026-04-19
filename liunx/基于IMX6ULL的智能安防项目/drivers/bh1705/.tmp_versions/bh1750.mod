@@ -1,0 +1,2 @@
+/home/fanwenhao/project/smartHome/driver/bh1705/bh1750.ko
+/home/fanwenhao/project/smartHome/driver/bh1705/bh1750.o

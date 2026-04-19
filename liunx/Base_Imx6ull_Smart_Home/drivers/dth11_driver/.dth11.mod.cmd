@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.mod := { echo  /home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.o;  echo; } > /home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.mod

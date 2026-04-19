@@ -1,0 +1,2 @@
+/home/fanwenhao/project/smartHome/driver/dth11_driver/dth11.o
+

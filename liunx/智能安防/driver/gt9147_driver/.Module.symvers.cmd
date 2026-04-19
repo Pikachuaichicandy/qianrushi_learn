@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/gt9147_driver/Module.symvers := sed 's/\.ko$$/\.o/' /home/fanwenhao/project/smartHome/driver/gt9147_driver/modules.order | scripts/mod/modpost -m -a  -o /home/fanwenhao/project/smartHome/driver/gt9147_driver/Module.symvers -e    -w -T -

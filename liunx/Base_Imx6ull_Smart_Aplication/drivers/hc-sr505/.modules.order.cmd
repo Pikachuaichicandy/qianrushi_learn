@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hc-sr505/modules.order := {   echo /home/fanwenhao/project/smartHome/driver/hc-sr505/hc-sr505.ko; :; } | awk '!x[$$0]++' - > /home/fanwenhao/project/smartHome/driver/hc-sr505/modules.order

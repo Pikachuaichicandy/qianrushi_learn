@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/gt9147_driver/gt9147.ko := arm-linux-gnueabihf-ld -r -EL -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/fanwenhao/project/smartHome/driver/gt9147_driver/gt9147.ko /home/fanwenhao/project/smartHome/driver/gt9147_driver/gt9147.o /home/fanwenhao/project/smartHome/driver/gt9147_driver/gt9147.mod.o;  true

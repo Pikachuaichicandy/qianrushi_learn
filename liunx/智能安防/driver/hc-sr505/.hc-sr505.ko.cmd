@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hc-sr505/hc-sr505.ko := arm-linux-gnueabihf-ld -r -EL -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/fanwenhao/project/smartHome/driver/hc-sr505/hc-sr505.ko /home/fanwenhao/project/smartHome/driver/hc-sr505/hc-sr505.o /home/fanwenhao/project/smartHome/driver/hc-sr505/hc-sr505.mod.o;  true

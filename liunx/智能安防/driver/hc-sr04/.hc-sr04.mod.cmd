@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hc-sr04/hc-sr04.mod := { echo  /home/fanwenhao/project/smartHome/driver/hc-sr04/hc-sr04.o;  echo; } > /home/fanwenhao/project/smartHome/driver/hc-sr04/hc-sr04.mod

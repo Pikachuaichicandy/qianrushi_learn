@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/gt9147_driver/gt9147.mod := { echo  /home/fanwenhao/project/smartHome/driver/gt9147_driver/gt9147.o;  echo; } > /home/fanwenhao/project/smartHome/driver/gt9147_driver/gt9147.mod

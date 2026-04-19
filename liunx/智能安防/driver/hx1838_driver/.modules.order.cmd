@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hx1838_driver/modules.order := {   echo /home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.ko; :; } | awk '!x[$$0]++' - > /home/fanwenhao/project/smartHome/driver/hx1838_driver/modules.order

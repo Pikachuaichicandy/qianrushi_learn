@@ -1,0 +1,1 @@
+cmd_/home/alientek/linux/nfs/rootfs/driver/hc-sr04/hc-sr04.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/alientek/linux/nfs/rootfs/driver/hc-sr04/hc-sr04.ko /home/alientek/linux/nfs/rootfs/driver/hc-sr04/hc-sr04.o /home/alientek/linux/nfs/rootfs/driver/hc-sr04/hc-sr04.mod.o

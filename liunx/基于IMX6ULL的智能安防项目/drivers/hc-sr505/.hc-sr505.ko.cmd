@@ -1,0 +1,1 @@
+cmd_/home/alientek/linux/nfs/rootfs/home/root/drivers/hc-sr505/hc-sr505.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/alientek/linux/nfs/rootfs/home/root/drivers/hc-sr505/hc-sr505.ko /home/alientek/linux/nfs/rootfs/home/root/drivers/hc-sr505/hc-sr505.o /home/alientek/linux/nfs/rootfs/home/root/drivers/hc-sr505/hc-sr505.mod.o

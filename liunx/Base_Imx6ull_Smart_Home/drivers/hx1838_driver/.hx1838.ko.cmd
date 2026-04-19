@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.ko := arm-linux-gnueabihf-ld -r -EL -z noexecstack --build-id=sha1  -T scripts/module.lds -o /home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.ko /home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.o /home/fanwenhao/project/smartHome/driver/hx1838_driver/hx1838.mod.o;  true

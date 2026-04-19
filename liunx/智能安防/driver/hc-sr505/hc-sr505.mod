@@ -1,0 +1,2 @@
+/home/fanwenhao/project/smartHome/driver/hc-sr505/hc-sr505.o
+

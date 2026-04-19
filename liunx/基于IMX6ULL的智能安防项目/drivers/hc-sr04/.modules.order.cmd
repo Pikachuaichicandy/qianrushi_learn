@@ -1,0 +1,1 @@
+cmd_/home/fanwenhao/project/smartHome/driver/hc-sr04/modules.order := {   echo /home/fanwenhao/project/smartHome/driver/hc-sr04/hc-sr04.ko; :; } | awk '!x[$$0]++' - > /home/fanwenhao/project/smartHome/driver/hc-sr04/modules.order

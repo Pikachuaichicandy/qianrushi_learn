@@ -1,0 +1,1 @@
+cmd_/home/alientek/linux/nfs/rootfs/driver/dth11_driver/dth11.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/alientek/linux/nfs/rootfs/driver/dth11_driver/dth11.ko /home/alientek/linux/nfs/rootfs/driver/dth11_driver/dth11.o /home/alientek/linux/nfs/rootfs/driver/dth11_driver/dth11.mod.o

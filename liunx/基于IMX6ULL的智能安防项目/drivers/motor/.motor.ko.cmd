@@ -1,0 +1,1 @@
+cmd_/home/alientek/linux/nfs/rootfs/driver/motor/motor.ko := arm-linux-gnueabihf-ld -EL -r  -T ./scripts/module-common.lds --build-id  -o /home/alientek/linux/nfs/rootfs/driver/motor/motor.ko /home/alientek/linux/nfs/rootfs/driver/motor/motor.o /home/alientek/linux/nfs/rootfs/driver/motor/motor.mod.o
